@@ -41,6 +41,7 @@ public class DetectIntentTexts {
 
 			// Detect intents for each text input
 			for (String text : texts) {
+				if (text.isEmpty()) continue;
 				// Set the text (hello) and language code (en-US) for the query
 				Builder textInput = TextInput.newBuilder().setText(text).setLanguageCode(languageCode);
 

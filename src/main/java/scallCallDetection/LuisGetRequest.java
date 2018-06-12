@@ -31,8 +31,8 @@ public class LuisGetRequest {
          // Add your subscription key 
          String SubscriptionKey = "f6ea8956f36b4379bcab23f342bfb460";
 
-     URIBuilder builder = 
-         new URIBuilder("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + AppId + "?");
+         URIBuilder builder = 
+        		 new URIBuilder("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + AppId + "?");
 
          builder.setParameter("q", "turn on the left light");
          builder.setParameter("timezoneOffset", "0");
