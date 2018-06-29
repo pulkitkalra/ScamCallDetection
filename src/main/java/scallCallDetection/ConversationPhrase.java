@@ -10,6 +10,7 @@ import com.google.cloud.dialogflow.v2.QueryResult;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
+import com.google.protobuf.ListValue;
 
 import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 
@@ -32,19 +33,16 @@ public class ConversationPhrase {
 		Map<String, Value> map = entityMap.getFieldsMap();
 		
 		for (Entry<String, Value> entity: map.entrySet()){
-			if (!entity.getValue().toString().trim().equals("string_value: \"\"")){
+			if (!entity.getValue().toString().trim().equals("string_value: \"\"") ) {
+				if (entity.getValue().getKindCase().equals(Value.KindCase.LIST_VALUE)){
+					if (entity.getValue().toString().trim().equals("list_value {\n}")){
+						continue;
+					}
+				}
 				entityList.add("Entity: "+ entity.getKey() + "; value = " 
 						+ entity.getValue());
 			}
 		}
-		/*Map<FieldDescriptor, Object> newMap = entityMap.getAllFields();
-		
-		for (Entry<FieldDescriptor, Object> entity: newMap.entrySet()){
-			if (!StringUtil.isNullOrEmpty(entity.getValue().toString())){
-				entityList.add("Entity: "+ entity.getKey().getFullName() + "; value = " 
-						+ entity.getValue());
-			}
-		}*/
 		return entityList;
 	}
 	
