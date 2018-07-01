@@ -1,24 +1,20 @@
 package scallCallDetection;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.cloud.dialogflow.v2.DetectIntentResponse;
 import com.google.cloud.dialogflow.v2.QueryResult;
-import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
-import com.google.protobuf.ListValue;
-
-import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 
 public class ConversationPhrase {
 	private String sentence;
 	private Struct entityMap;
 	private DetectIntentResponse response;
-	private List<String> entityList;
+	private List<DFEntity> entityList;
 	
 	public ConversationPhrase(DetectIntentResponse response){
 		this.response = response;
@@ -26,7 +22,7 @@ public class ConversationPhrase {
 		this.entityList = new ArrayList<>();
 	}
 	
-	private List<String> getEntities(){
+	public List<DFEntity> getEntities(){
 		//entityMap = response.getAllFields();
 		QueryResult result = response.getQueryResult();
 		entityMap = result.getParameters();
@@ -39,31 +35,30 @@ public class ConversationPhrase {
 						continue;
 					}
 				}
-				entityList.add("Entity: "+ entity.getKey() + "; value = " 
-						+ entity.getValue());
+				DFEntity ent = new DFEntity(entity.getKey(), entity.getValue());
+				entityList.add(ent);
 			}
 		}
 		return entityList;
 	}
 	
-	private String getIntents(){
+	public DFIntent getIntent(){
 		QueryResult queryResult = response.getQueryResult();
-		String intentString = "Detected Intent: "+ queryResult.getIntent().getDisplayName()+ " (confidence: " 
-				+ queryResult.getIntentDetectionConfidence() + ")";
-		return intentString;
+		DFIntent intent = new DFIntent(queryResult.getIntent(),queryResult.getIntentDetectionConfidence());
+		return intent;
 	}
 	
-	private String getQueryText(){
+	public String getQueryText(){
 		return response.getQueryResult().getQueryText();
 	}
 	
 	public void printNLPResult(){
 		System.out.println("Query: " + sentence);
-		System.out.println(getIntents());
-		List<String> entities = getEntities();
+		System.out.println(getIntent().toString());
+		List<DFEntity> entities = getEntities();
 		System.out.println("Entities Found:");
-		for (String s: entities){
-			System.out.println(s);
+		for (DFEntity e: entities){
+			System.out.println(e.toString());
 		}
 	}
 }

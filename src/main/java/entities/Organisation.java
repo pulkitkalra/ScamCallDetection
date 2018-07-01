@@ -1,5 +1,6 @@
 package entities;
 
 public enum Organisation {
-	IRS
+	IRS,
+	CRIMINAL_INVESTIGATION_DEPRATMENT
 }

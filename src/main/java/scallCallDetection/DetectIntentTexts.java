@@ -15,6 +15,8 @@ import com.google.cloud.dialogflow.v2.TextInput.Builder;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import featureExtraction.CallFeatureExtraction;
+
 
 
 /**
@@ -38,7 +40,7 @@ public class DetectIntentTexts {
 			// Set the session name using the sessionId (UUID) and projectID (my-project-id)
 			SessionName session = SessionName.of(projectId, sessionId);
 			System.out.println("Session Path: " + session.toString());
-
+			CallFeatureExtraction extraction  = new CallFeatureExtraction();
 			// Detect intents for each text input
 			for (String text : texts) {
 				if (text.isEmpty()) continue;
@@ -52,6 +54,7 @@ public class DetectIntentTexts {
 				DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
 
 				ConversationPhrase phrase = new ConversationPhrase(response);
+				extraction.processConversationPhrase(phrase);
 				phrase.printNLPResult();
 			}
 		}
