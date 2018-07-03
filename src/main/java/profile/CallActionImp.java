@@ -1,14 +1,15 @@
 package profile;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import entities.Organisation;
 import entities.PaymentMethod;
 
 public class CallActionImp implements CallAction {
 	// TODO: should be lists
-	private BigDecimal amountRequested;
-	private Organisation paymentReceiver;
+	private List<BigDecimal> amountRequested;
+	private List<Organisation> paymentReceiver;
 	private PaymentMethod paymentMethod;
 	
 	public CallActionImp() {
@@ -16,13 +17,13 @@ public class CallActionImp implements CallAction {
 	}
 	
 	@Override
-	public void setPaymentRequest(BigDecimal amountRequested) {
-		this.amountRequested = amountRequested;
+	public void addPaymentRequest(BigDecimal amountRequested) {
+		this.amountRequested.add(amountRequested);
 	}
 	
 	@Override
-	public void setPaymentReceiver(Organisation o) {
-		this.paymentReceiver = o;
+	public void addPaymentReceiver(Organisation o) {
+		this.paymentReceiver.add(o);
 	}
 	
 	@Override
@@ -31,7 +32,7 @@ public class CallActionImp implements CallAction {
 	}
 	
 	@Override
-	public BigDecimal getAmountRequested() {
+	public List<BigDecimal> getAmountRequested() {
 		return amountRequested;
 	}
 	
