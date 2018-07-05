@@ -3,20 +3,21 @@ package profile;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Organisation;
 import entities.PersonalInfo;
 import entities.ThreatEnum;
 
 public class ThreatImp implements Threat {
 	
-	//public enum ThreatType { ARREST_THREAT, COURT_THREAT, PRIVACY_THREAT};
-	
 	private List<ThreatEnum> arrestThreat;
 	private List<PersonalInfo> privacyThreat;
+	private List<Organisation> organisationsInvolved;
 	//private List<OperationPhrase> courtThreat;
 	
 	public ThreatImp() {
 		this.arrestThreat = new ArrayList<>();
 		this.privacyThreat = new ArrayList<>();
+		this.organisationsInvolved = new ArrayList<>(); 
 	}
 	
 	@Override
@@ -37,5 +38,15 @@ public class ThreatImp implements Threat {
 	@Override
 	public List<PersonalInfo> getPrivacyThreats(){
 		return privacyThreat;
+	}
+
+	@Override
+	public void addOrganisations(Organisation o) {
+		this.organisationsInvolved.add(o);
+	}
+
+	@Override
+	public List<Organisation> getOrganisations() {
+		return organisationsInvolved;
 	}
 }

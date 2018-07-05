@@ -12,7 +12,6 @@ import com.google.protobuf.Value;
 
 public class ConversationPhrase {
 	private String sentence;
-	private Struct entityMap;
 	private DetectIntentResponse response;
 	private List<DFEntity> entityList;
 	
@@ -25,7 +24,7 @@ public class ConversationPhrase {
 	public List<DFEntity> getEntities(){
 		//entityMap = response.getAllFields();
 		QueryResult result = response.getQueryResult();
-		entityMap = result.getParameters();
+		Struct entityMap = result.getParameters();
 		Map<String, Value> map = entityMap.getFieldsMap();
 		
 		for (Entry<String, Value> entity: map.entrySet()){

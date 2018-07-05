@@ -5,6 +5,7 @@ public class CallProfileImp implements CallProfile {
 	private CallSource source;
 	private CallReason reason;
 	private CallAction action;
+	private CallScamSpecifics scamSpecifics;
 	private Threat threat;
 	
 	/**
@@ -15,6 +16,7 @@ public class CallProfileImp implements CallProfile {
 		this.reason = new CallReasonImp();
 		this.action = new CallActionImp();
 		this.threat = new ThreatImp();
+		this.scamSpecifics = new CallScamSpecificsImp();
 	}
 	
 	@Override
@@ -35,5 +37,10 @@ public class CallProfileImp implements CallProfile {
 	@Override
 	public Threat getCallThreat() {
 		return this.threat;
+	}
+
+	@Override
+	public CallScamSpecifics getCallScamSpecifics() {
+		return scamSpecifics;
 	}
 }

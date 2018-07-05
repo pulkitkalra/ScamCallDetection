@@ -17,7 +17,7 @@ public class CallFeatureExtraction {
 	 */
 	public void processConversationPhrase(ConversationPhrase phrase) {
 		String intentName = phrase.getIntent().getIntent().getDisplayName();
-		Extraction result;
+		Extraction result = null;
 		switch (intentName) {
 			case "Call_intro":
 				result = new CallIntroExtraction(phrase);
@@ -28,21 +28,21 @@ public class CallFeatureExtraction {
 			case "Call_RequestPayment":
 				result = new CallActionExtraction(phrase);
 				break;
-			case "Call_Authority":
+			case "Call_PrivacyThreat": case "Call_Threat":
+				result = new CallThreatExtraction(phrase);
 				break;
-			case "Call_Operation":
-				break;
-			case "Call_PrivacyThreat":
-				break;
-			case "Call_Threat":
-				break;
-			case "Call_Urgency":
+			case "Call_Authority": case "Call_Operation": case "Call_Urgency":
+				result = new CallScamSpecificsExtraction(phrase);
 				break;
 			default:
-				// none
+				// none: Default Fallback Intent
 				break;
 		}
-		result.updateProfile(profile);
+		
+		if (result != null) {
+			result.updateProfile(profile);
+		}
+		
 		System.out.println("Done!");
 	}
 	

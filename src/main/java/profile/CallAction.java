@@ -1,16 +1,15 @@
 package profile;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import entities.Organisation;
 import entities.PaymentMethod;
 
 public interface CallAction {
-	void addPaymentRequest(BigDecimal amountRequested);
+	void addPaymentRequest(Double amountRequested);
 	void addPaymentReceiver(Organisation o);
-	void setPaymentMethod(PaymentMethod pm);
-	List<BigDecimal> getAmountRequested();
-	Organisation getPaymentReceiver();
-	PaymentMethod getPaymentMethod();
+	void addPaymentMethod(PaymentMethod pm);
+	List<Double> getAmountRequested();
+	List<Organisation> getPaymentReceiver();
+	List<PaymentMethod> getPaymentMethod();
 }
