@@ -63,17 +63,17 @@ public class DetectIntentTexts {
 				DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
 
 				ConversationPhrase phrase = new ConversationPhrase(response);
-				/*extraction.processConversationPhrase(phrase);
+				extraction.processConversationPhrase(phrase);
 				CallProfile cp = extraction.getCallProfile();
 				ExportProfileAdapter adapter = new ExportProfileAdapter(cp);
 				String[] profList = adapter.getProfileList();
 				if (!csvOutputList.contains(profList)) {
 					csvOutputList.add(adapter.getProfileList());
-				}*/
+				}
 				//phrase.printNLPResult();
 			}
 			
-			//ExportProfile.exportToCSV(csvOutputList);
+			ExportProfile.exportToCSV(csvOutputList);
 			Long totalTime = System.currentTimeMillis() - startTime;
 			totalTime.toString();
 			
