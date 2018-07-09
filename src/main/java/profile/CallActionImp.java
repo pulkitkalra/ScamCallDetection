@@ -1,47 +1,49 @@
 package profile;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import entities.Organisation;
 import entities.PaymentMethod;
 
 public class CallActionImp implements CallAction {
-	// TODO: should be lists
-	private BigDecimal amountRequested;
-	private Organisation paymentReceiver;
-	private PaymentMethod paymentMethod;
+	private List<Double> amountRequested;
+	private List<Organisation> paymentReceiver;
+	private List<PaymentMethod> paymentMethod;
 	
 	public CallActionImp() {
-		
+		amountRequested = new ArrayList<>();
+		paymentReceiver = new ArrayList<>();
+		paymentMethod = new ArrayList<>();
 	}
 	
 	@Override
-	public void setPaymentRequest(BigDecimal amountRequested) {
-		this.amountRequested = amountRequested;
+	public void addPaymentRequest(Double amountRequested) {
+		this.amountRequested.add(amountRequested);
 	}
 	
 	@Override
-	public void setPaymentReceiver(Organisation o) {
-		this.paymentReceiver = o;
+	public void addPaymentReceiver(Organisation o) {
+		this.paymentReceiver.add(o);
 	}
 	
 	@Override
-	public void setPaymentMethod(PaymentMethod pm) {
-		this.paymentMethod = pm;
+	public void addPaymentMethod(PaymentMethod pm) {
+		this.paymentMethod.add(pm);
 	}
 	
 	@Override
-	public BigDecimal getAmountRequested() {
+	public List<Double> getAmountRequested() {
 		return amountRequested;
 	}
 	
 	@Override
-	public Organisation getPaymentReceiver() {
+	public List<Organisation> getPaymentReceiver() {
 		return paymentReceiver;
 	}
 	
 	@Override
-	public PaymentMethod getPaymentMethod() {
+	public List<PaymentMethod> getPaymentMethod() {
 		return paymentMethod;
 	}
 }

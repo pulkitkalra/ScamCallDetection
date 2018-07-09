@@ -7,10 +7,11 @@ public class CallReasonImp implements CallReason {
 	
 	private boolean taxRelated;
 	private List<String> taxAction; 
-	private int sentiment;
+	private int confidenceOfTax;
 	
 	public CallReasonImp() {
 		this.taxAction = new ArrayList<>();
+		this.confidenceOfTax = 0;
 	}
 	/**
 	 * TODO:Enforce tax related being false, then no action should be defined.
@@ -21,16 +22,13 @@ public class CallReasonImp implements CallReason {
 		this.taxAction.add(taxAction);
 	}
 	/**
-	 * Set sentiment of call reason. Sentiment must be between -1 and 1.
-	 * @param sentiment
+	 * Method is used to pass in a max of 3 TRUE boolean parameters to reflect
+	 * if (1) tax was mentioned, (2) a government entity was mentioned and (3) irs mentioned.
+	 * @param taxMentions
 	 */
 	@Override
-	public void setSentiment(int sentiment) {
-		if (sentiment > -1 && sentiment < 1) {
-			this.sentiment = sentiment;
-		} else {
-			sentiment = 0;
-		}
+	public void updateConfidence(boolean... taxMentions) {
+		confidenceOfTax+= taxMentions.length;
 	}
 	
 	@Override
@@ -44,14 +42,13 @@ public class CallReasonImp implements CallReason {
 	}
 	
 	@Override
-	public int getSentiment() {
-		return sentiment;
+	public int getTaxConfidence() {
+		return confidenceOfTax;
 	}
 
 	@Override
 	public void addTaxAction(String action) {
 		taxAction.add(action);
-		
 	}
 
 }

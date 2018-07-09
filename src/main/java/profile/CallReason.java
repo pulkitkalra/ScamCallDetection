@@ -5,10 +5,10 @@ import java.util.List;
 public interface CallReason {
 	
 	void setCallReasonTax(boolean taxRelated, String taxAction);
-	void setSentiment(int sentiment);
+	void updateConfidence(boolean... taxMentions);
 	boolean getTaxRelated();
 	List<String> getTaxAction();
 	void addTaxAction(String action);
-	int getSentiment();
+	int getTaxConfidence();
 
 }

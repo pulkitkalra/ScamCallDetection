@@ -2,5 +2,8 @@ package entities;
 
 public enum PaymentMethod {
 	BANK_CARD,
-	TRANSFER
+	TRANSFER,
+	GIFT_CARD,
+	TAX_VOUCHER,
+	DEFAULT
 }

@@ -16,6 +16,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import featureExtraction.CallFeatureExtraction;
+import profile.CallProfile;
 
 
 
@@ -57,6 +58,8 @@ public class DetectIntentTexts {
 				extraction.processConversationPhrase(phrase);
 				phrase.printNLPResult();
 			}
+			CallProfile cp = extraction.getCallProfile();
+			cp.toString();
 		}
 	}
 	

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import entities.Organisation;
 import featureExtraction.CallFeatureExtraction;
 
-@Disabled
 class CallSourceTest {
 	private CallFeatureExtraction extraction;
 
@@ -21,7 +20,7 @@ class CallSourceTest {
 	@Test
 	void testCallSource() {
 		CallSource source = new CallSourceImp();
-		source.addOrganisation(Organisation.CRIMINAL_INVESTIGATION_DEPRATMENT);
+		source.addOrganisation(Organisation.GOVERNMENT_ENTITY);
 		source.addOrganisation(Organisation.IRS);
 
 		CallProfile extractedProfile = extraction.getCallProfile();
@@ -29,7 +28,7 @@ class CallSourceTest {
 
 		assertAll("person",
 			() -> assertTrue(extractedSource.getName().contains("James")),
-			() -> assertTrue(extractedSource.getOrganisations().contains(Organisation.CRIMINAL_INVESTIGATION_DEPRATMENT)),
+			() -> assertTrue(extractedSource.getOrganisations().contains(Organisation.GOVERNMENT_ENTITY)),
 			() -> assertTrue(extractedSource.getOrganisations().contains(Organisation.IRS))
 		);
 	}
