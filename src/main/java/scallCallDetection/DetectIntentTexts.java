@@ -15,6 +15,10 @@ import com.google.cloud.dialogflow.v2.TextInput.Builder;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import edu.stanford.nlp.util.Index;
+import edu.stanford.nlp.util.StringParsingTask;
+import export.ExportProfile;
+import export.ExportProfileAdapter;
 import featureExtraction.CallFeatureExtraction;
 import profile.CallProfile;
 
@@ -38,12 +42,16 @@ public class DetectIntentTexts {
 			String languageCode) throws Exception {
 		// Instantiates a client
 		try (SessionsClient sessionsClient = SessionsClient.create()) {
+			Long startTime = System.currentTimeMillis();
 			// Set the session name using the sessionId (UUID) and projectID (my-project-id)
 			SessionName session = SessionName.of(projectId, sessionId);
 			System.out.println("Session Path: " + session.toString());
 			CallFeatureExtraction extraction  = new CallFeatureExtraction();
+			List<String[]> csvOutputList = new ArrayList<>();
+			int index = 0;
 			// Detect intents for each text input
 			for (String text : texts) {
+				System.out.println("Processing line " + (++index) + "/" + texts.length);
 				if (text.isEmpty()) continue;
 				// Set the text (hello) and language code (en-US) for the query
 				Builder textInput = TextInput.newBuilder().setText(text).setLanguageCode(languageCode);
@@ -55,11 +63,20 @@ public class DetectIntentTexts {
 				DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
 
 				ConversationPhrase phrase = new ConversationPhrase(response);
-				extraction.processConversationPhrase(phrase);
-				phrase.printNLPResult();
+				/*extraction.processConversationPhrase(phrase);
+				CallProfile cp = extraction.getCallProfile();
+				ExportProfileAdapter adapter = new ExportProfileAdapter(cp);
+				String[] profList = adapter.getProfileList();
+				if (!csvOutputList.contains(profList)) {
+					csvOutputList.add(adapter.getProfileList());
+				}*/
+				//phrase.printNLPResult();
 			}
-			CallProfile cp = extraction.getCallProfile();
-			cp.toString();
+			
+			//ExportProfile.exportToCSV(csvOutputList);
+			Long totalTime = System.currentTimeMillis() - startTime;
+			totalTime.toString();
+			
 		}
 	}
 	

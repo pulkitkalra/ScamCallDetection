@@ -27,3 +27,4 @@ hs_err_pid*
 # JSON key #
 5ddd6a8801b6.json
 .settings/org.eclipse.jdt.core.prefs
+output.csv

@@ -67,8 +67,8 @@ public class CallScamSpecificsExtraction implements Extraction {
 				for (Value v: valList) {
 					String entityValue = v.getStringValue();
 					switch (entityValue) {
-						case "disconnect":
-							op = OperationPhrase.DISCONNECT;
+						case "mute":
+							op = OperationPhrase.MUTE;
 							break;
 						case "on hold":
 							op = OperationPhrase.ON_HOLD;
@@ -76,8 +76,8 @@ public class CallScamSpecificsExtraction implements Extraction {
 						case "record":
 							op = OperationPhrase.RECORD;
 							break;
-						case "do not hang up":
-							op = OperationPhrase.DO_NOT_HANG_UP;
+						case "disconnect":
+							op = OperationPhrase.DISCONNECT;
 							break;
 						default:
 							op = OperationPhrase.DEFAULT;
