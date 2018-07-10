@@ -137,8 +137,7 @@ public class WekaClassifier implements DetectionEngine{
 
 
 		data.add(instance);
-		data.add(instance);
-		data.add(instance);
+
 
 		//		// model NaiveBayes
 		//		NaiveBayes naiveBayes = new NaiveBayes();
@@ -189,7 +188,7 @@ public class WekaClassifier implements DetectionEngine{
 	public static void main(String[] args){
 		WekaClassifier test = new WekaClassifier();
 		test.setup();
-		String[] profileInstance = {"IRS","TRUE","NONE","TRUE","TRUE","TRUE","TRUE","HIGH","TAX_VOUCHER","ON_HOLD","TRUE","HIGH","LOW"};
+		String[] profileInstance = {"IRS","FALSE","NONE","FALSE","FALSE","FALSE","FALSE","LOW","NONE","NONE","FALSE","NONE","NONE"};
 		
 		double isScam = test.getProbabilityOfScam(profileInstance);
 		DecimalFormat df = new DecimalFormat("####0.00");
