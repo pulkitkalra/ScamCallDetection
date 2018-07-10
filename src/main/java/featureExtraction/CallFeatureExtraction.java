@@ -42,8 +42,6 @@ public class CallFeatureExtraction {
 		if (result != null) {
 			result.updateProfile(profile);
 		}
-		
-		System.out.println("Done!");
 	}
 	
 	public CallProfile getCallProfile() {
