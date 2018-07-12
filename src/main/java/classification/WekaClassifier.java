@@ -36,6 +36,7 @@ public class WekaClassifier implements DetectionEngine{
 
 	static ArrayList<Attribute> callAttributes = new ArrayList<Attribute>();
 	private RandomForest _randomForest;
+	private IBk _kNN;
 
 	public void setup() {
 
@@ -45,8 +46,8 @@ public class WekaClassifier implements DetectionEngine{
 		irsStatus.add("NOTIRS");
 
 		ArrayList<String> booleanValues = new ArrayList<String>();
-		booleanValues.add("FALSE");
-		booleanValues.add("TRUE");
+		booleanValues.add("false");
+		booleanValues.add("true");
 
 		ArrayList<String> taxConfidence = new ArrayList<String>();
 		taxConfidence.add("NONE");
@@ -99,13 +100,13 @@ public class WekaClassifier implements DetectionEngine{
 		callAttributes.add(new Attribute(ATTRIBUTE_AMOUNT_REQUESTED, amountRequested));
 		callAttributes.add(new Attribute(ATTRIBUTE_PAYMENT_METHODS, paymentMethods));
 		callAttributes.add(new Attribute(ATTRIBUTE_SCAM_SIGNALS, scamSignals));
-		callAttributes.add(new Attribute(ATTRIBUTE_SCAM_SIGNAL_INCLUDES_THREAT, booleanValues));
 		callAttributes.add(new Attribute(ATTRIBUTE_COURT_MENTIONED, courtMentioned));
 		callAttributes.add(new Attribute(ATTRIBUTE_URGENCY_INDEX, urgencyIndex));		
 		callAttributes.add(new Attribute("@@SCAM YES/NO@@", classes));
 
 		try {
 			_randomForest = (RandomForest) SerializationHelper.read(new FileInputStream("dataset.model"));
+			_kNN = (IBk) SerializationHelper.read(new FileInputStream("dataset_knn.model"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,7 +121,7 @@ public class WekaClassifier implements DetectionEngine{
 		Instances data = new Instances("scamcall", callAttributes, 0);
 		data.setClassIndex(data.numAttributes() - 1);
 
-		DenseInstance instance = new DenseInstance(14);
+		DenseInstance instance = new DenseInstance(13);
 		instance.setValue(data.attribute(ATTRIBUTE_IRS_STATUS), profileInstance[0]);
 		instance.setValue(data.attribute(ATTRIBUTE_TAX_RELATED), profileInstance[1]);
 		instance.setValue(data.attribute(ATTRIBUTE_TAX_CONFIDENCE), profileInstance[2]);
@@ -131,13 +132,12 @@ public class WekaClassifier implements DetectionEngine{
 		instance.setValue(data.attribute(ATTRIBUTE_AMOUNT_REQUESTED), profileInstance[7]);
 		instance.setValue(data.attribute(ATTRIBUTE_PAYMENT_METHODS), profileInstance[8]);
 		instance.setValue(data.attribute(ATTRIBUTE_SCAM_SIGNALS), profileInstance[9]);
-		instance.setValue(data.attribute(ATTRIBUTE_SCAM_SIGNAL_INCLUDES_THREAT), profileInstance[10]);
-		instance.setValue(data.attribute(ATTRIBUTE_COURT_MENTIONED), profileInstance[11]);
-		instance.setValue(data.attribute(ATTRIBUTE_URGENCY_INDEX), profileInstance[12]);	
+		instance.setValue(data.attribute(ATTRIBUTE_COURT_MENTIONED), profileInstance[10]);
+		instance.setValue(data.attribute(ATTRIBUTE_URGENCY_INDEX), profileInstance[11]);	
 
 
 		data.add(instance);
-
+		data.add(instance);
 
 		//		// model NaiveBayes
 		//		NaiveBayes naiveBayes = new NaiveBayes();
@@ -151,29 +151,36 @@ public class WekaClassifier implements DetectionEngine{
 
 
 		Evaluation RFEvaluation;
+		Evaluation kNNEvaluation;
 		try {
 			RFEvaluation = new Evaluation(data);
 			RFEvaluation.evaluateModel(_randomForest, data);
+			kNNEvaluation = new Evaluation(data);
+			kNNEvaluation.evaluateModel(_kNN, data);
 			//		Evaluation NBEvaluation = new Evaluation(train);
 			//		NBEvaluation.evaluateModel(naiveBayes, data);
 
 			double RFlabel = _randomForest.classifyInstance(data.instance(0));
 			data.instance(0).setClassValue(RFlabel);
+//			double kNNlabel = _kNN.classifyInstance(data.instance(1));
+//			data.instance(1).setClassValue(kNNlabel);
 			//		double NBlabel = naiveBayes.classifyInstance(data.instance(1));
 			//		data.instance(1).setClassValue(NBlabel);
 
-			System.out.println(data.instance(0).stringValue(13));
+			System.out.println(data.instance(0).stringValue(12));
 			double[] RFprediction = _randomForest.distributionForInstance(data.instance(0));
+			System.out.println("CLASSIFIER: RandomForest");
 			for (int i=0; i<RFprediction.length; i++){
 				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(RFprediction[i]));
 			}
 
 
-			//		System.out.println(data.instance(1).stringValue(4));
-			//		double[] NBprediction = naiveBayes.distributionForInstance(data.instance(1));
-			//		for (int i=0; i<NBprediction.length; i++){
-			//			System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(NBprediction[i]));
-			//		}
+//			System.out.println(data.instance(1).stringValue(12));
+//			double[] kNNprediction = _kNN.distributionForInstance(data.instance(1));
+//			System.out.println("CLASSIFIER: KNN");
+//			for (int i=0; i<kNNprediction.length; i++){
+//				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(kNNprediction[i]));
+//			}
 
 			return RFprediction[1];
 		} catch (Exception e) {
@@ -185,15 +192,15 @@ public class WekaClassifier implements DetectionEngine{
 
 	}
 	
-	public static void main(String[] args){
-		WekaClassifier test = new WekaClassifier();
-		test.setup();
-		String[] profileInstance = {"IRS","FALSE","NONE","FALSE","FALSE","FALSE","FALSE","LOW","NONE","NONE","FALSE","NONE","NONE"};
-		
-		double isScam = test.getProbabilityOfScam(profileInstance);
-		DecimalFormat df = new DecimalFormat("####0.00");
-		System.out.println("The probability of this call at this point in time being a scam is " + df.format(isScam*100) + "%");
-	}
+//	public static void main(String[] args){
+//		WekaClassifier test = new WekaClassifier();
+//		test.setup();
+//		String[] profileInstance = {"IRS","FALSE","NONE","FALSE","FALSE","FALSE","FALSE","LOW","NONE","NONE","FALSE","NONE","NONE"};
+//		
+//		double isScam = test.getProbabilityOfScam(profileInstance);
+//		DecimalFormat df = new DecimalFormat("####0.00");
+//		System.out.println("The probability of this call at this point in time being a scam is " + df.format(isScam*100) + "%");
+//	}
 }
 
 

@@ -2,6 +2,7 @@ package scallCallDetection;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,8 @@ import com.google.cloud.dialogflow.v2.TextInput.Builder;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import classification.DetectionEngine;
+import classification.WekaClassifier;
 import edu.stanford.nlp.util.Index;
 import edu.stanford.nlp.util.StringParsingTask;
 import export.ExportProfile;
@@ -49,6 +52,10 @@ public class DetectIntentTexts {
 			CallFeatureExtraction extraction  = new CallFeatureExtraction();
 			List<String[]> csvOutputList = new ArrayList<>();
 			int index = 0;
+			
+			DetectionEngine engine = new WekaClassifier();
+			engine.setup();
+			
 			// Detect intents for each text input
 			for (String text : texts) {
 				System.out.println("Processing line " + (++index) + "/" + texts.length);
@@ -71,6 +78,11 @@ public class DetectIntentTexts {
 					csvOutputList.add(adapter.getProfileList());
 				}
 				//phrase.printNLPResult();
+				
+				double probOfScam = engine.getProbabilityOfScam(profList);
+				DecimalFormat df = new DecimalFormat("####0.00");
+				System.out.println("The probability of this call at this point in time being a scam is " + df.format(probOfScam*100) + "%");
+				
 			}
 			
 			ExportProfile.exportToCSV(csvOutputList);
