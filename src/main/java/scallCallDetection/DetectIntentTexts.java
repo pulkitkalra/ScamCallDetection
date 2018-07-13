@@ -68,7 +68,7 @@ public class DetectIntentTexts {
 				ExportProfileAdapter adapter = new ExportProfileAdapter(cp);
 				String[] profList = adapter.getProfileList();
 				if (!csvOutputList.contains(profList)) {
-					csvOutputList.add(adapter.getProfileList());
+					csvOutputList.add(profList);
 				}
 				//phrase.printNLPResult();
 			}
