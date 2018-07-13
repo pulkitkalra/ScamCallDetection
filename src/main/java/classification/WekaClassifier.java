@@ -36,7 +36,7 @@ public class WekaClassifier implements DetectionEngine{
 
 	static ArrayList<Attribute> callAttributes = new ArrayList<Attribute>();
 	private RandomForest _randomForest;
-	private IBk _kNN;
+	private NaiveBayes _kNN;
 
 	public void setup() {
 
@@ -106,7 +106,7 @@ public class WekaClassifier implements DetectionEngine{
 
 		try {
 			_randomForest = (RandomForest) SerializationHelper.read(new FileInputStream("dataset.model"));
-			_kNN = (IBk) SerializationHelper.read(new FileInputStream("dataset_knn.model"));
+			_kNN = (NaiveBayes) SerializationHelper.read(new FileInputStream("dataset_nb.model"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,16 +139,6 @@ public class WekaClassifier implements DetectionEngine{
 		data.add(instance);
 		data.add(instance);
 
-		//		// model NaiveBayes
-		//		NaiveBayes naiveBayes = new NaiveBayes();
-		//		naiveBayes.buildClassifier(train);
-
-		// model RandomForest with number of subtrees
-		//		RandomForest forest=new RandomForest();
-		//		forest.setNumIterations(1000);
-		//		forest.buildClassifier(train);
-
-
 
 		Evaluation RFEvaluation;
 		Evaluation kNNEvaluation;
@@ -164,8 +154,8 @@ public class WekaClassifier implements DetectionEngine{
 			data.instance(0).setClassValue(RFlabel);
 //			double kNNlabel = _kNN.classifyInstance(data.instance(1));
 //			data.instance(1).setClassValue(kNNlabel);
-			//		double NBlabel = naiveBayes.classifyInstance(data.instance(1));
-			//		data.instance(1).setClassValue(NBlabel);
+			double NBlabel = _kNN.classifyInstance(data.instance(1));
+			data.instance(1).setClassValue(NBlabel);
 
 			System.out.println(data.instance(0).stringValue(12));
 			double[] RFprediction = _randomForest.distributionForInstance(data.instance(0));
@@ -175,12 +165,12 @@ public class WekaClassifier implements DetectionEngine{
 			}
 
 
-//			System.out.println(data.instance(1).stringValue(12));
-//			double[] kNNprediction = _kNN.distributionForInstance(data.instance(1));
-//			System.out.println("CLASSIFIER: KNN");
-//			for (int i=0; i<kNNprediction.length; i++){
-//				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(kNNprediction[i]));
-//			}
+			System.out.println(data.instance(1).stringValue(12));
+			double[] kNNprediction = _kNN.distributionForInstance(data.instance(1));
+			System.out.println("CLASSIFIER: NB");
+			for (int i=0; i<kNNprediction.length; i++){
+				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(kNNprediction[i]));
+			}
 
 			return RFprediction[1];
 		} catch (Exception e) {
