@@ -82,13 +82,13 @@ public class MapTableView extends Application {
             
             //String[] split = cd.getValue().split(';');
             
-            TableColumn<String, String> column2 = new TableColumn<>("Value");
+            /*TableColumn<String, String> column2 = new TableColumn<>("Value");
             column2.setCellValueFactory(cd -> Bindings.valueAt(map, cd.getValue()));
             
             TableColumn<String[], String> column3 = new TableColumn<>("Value1");
-            column3.setCellValueFactory(cd -> Bindings.valueAt(map, cd.getValue()));
+            column3.setCellValueFactory(cd -> Bindings.valueAt(map, cd.getValue()));*/
 
-            table.getColumns().setAll(column1, column2, column3);
+            //table.getColumns().setAll(column1, column2, column3);
 
             Button changeButton = new Button("Change");
             changeButton.setOnAction((ActionEvent e) -> {

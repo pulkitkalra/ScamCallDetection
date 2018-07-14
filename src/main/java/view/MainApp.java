@@ -1,27 +1,82 @@
 package view;
 
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import profile.ProfileDTO;
+import scallCallDetection.DetectIntentTexts;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-
+    private ProfileDTO dto;
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("THIS IS NOT A SCAM!");
-
+        this.primaryStage.setTitle("SCAMbot: PROTECTING AGAINST SCAM!");
         initRootLayout();
-
-        showProfileOverview();
+        
+        /*Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {           
+                    @Override
+                    protected Void call() throws Exception {
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {                          
+                            @Override
+                            public void run() {
+                                try{
+                                	showProfileOverview();
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();    
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();*/
+        
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	showProfileOverview();
+            }
+        });
+        
+        final Task<Void> task = new Task<Void>() {
+        	@Override 
+        	protected Void call() throws InterruptedException {
+        		updateMessage("Finding friends . . .");
+        		try {
+                	DetectIntentTexts dit = new DetectIntentTexts(dto);
+                    dit.start();
+                } catch (Exception e) {
+        			e.printStackTrace();
+        		}
+        		updateMessage("Finished.");
+				return null;
+        	}            
+        };
+        new Thread(task).start();
     }
 
     /**
@@ -55,6 +110,11 @@ public class MainApp extends Application {
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(profileOverview);
+            
+            // Give the controller access to the main app.
+            ProfileOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+            this.dto = controller.getProfileDTO();
         } catch (IOException e) {
             e.printStackTrace();
         }

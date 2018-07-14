@@ -1,7 +1,9 @@
 package scallCallDetection;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ import export.ExportProfile;
 import export.ExportProfileAdapter;
 import featureExtraction.CallFeatureExtraction;
 import profile.CallProfile;
+import profile.ProfileDTO;
+import profile.ProfileDTOAdapter;
 
 
 
@@ -31,7 +35,12 @@ import profile.CallProfile;
  * DialogFlow API Detect Intent sample with text inputs.
  */
 public class DetectIntentTexts {
-
+	private ProfileDTO callProfileDTO;
+	
+	public DetectIntentTexts(ProfileDTO dto) {
+		this.callProfileDTO = dto;
+	}
+	
 	/**
 	 * Returns the result of detect intent with texts as inputs.
 	 *
@@ -41,7 +50,7 @@ public class DetectIntentTexts {
 	 * @param sessionId Identifier of the DetectIntent session.
 	 * @param languageCode Language code of the query.
 	 */
-	public static void detectIntentTexts(String projectId, String[] texts, String sessionId,
+	public void detectIntentTexts(String projectId, String[] texts, String sessionId,
 			String languageCode) throws Exception {
 		// Instantiates a client
 		try (SessionsClient sessionsClient = SessionsClient.create()) {
@@ -72,6 +81,10 @@ public class DetectIntentTexts {
 				ConversationPhrase phrase = new ConversationPhrase(response);
 				extraction.processConversationPhrase(phrase);
 				CallProfile cp = extraction.getCallProfile();
+				// Create Profile DTO:
+				ProfileDTOAdapter profileAdapter = new ProfileDTOAdapter(cp, callProfileDTO);
+				profileAdapter.updateProfileDTO();
+				// Create Export Profile.
 				ExportProfileAdapter adapter = new ExportProfileAdapter(cp);
 				String[] profList = adapter.getProfileList();
 				if (!csvOutputList.contains(profList)) {
@@ -92,7 +105,7 @@ public class DetectIntentTexts {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public void start() throws Exception {
 		@SuppressWarnings("unused")
 		Storage storage = StorageOptions.newBuilder().build().getService();
 

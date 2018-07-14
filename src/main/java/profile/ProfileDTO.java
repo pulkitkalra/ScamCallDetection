@@ -1,122 +1,121 @@
 package profile;
 
+import java.util.ArrayList;
+
+import org.netlib.util.booleanW;
+
+import entities.OperationPhrase;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ProfileDTO {
 	//private final StringProperty 
+	private final StringProperty listOfSourceOrgs  = new SimpleStringProperty("Unknown");
+	private final StringProperty callerNames = new SimpleStringProperty("Unknown");
+	private final BooleanProperty taxRelated =  new SimpleBooleanProperty(false);
+	private final StringProperty taxConfidence = new SimpleStringProperty("Unknown");;
+	private final DoubleProperty amountRequested = new SimpleDoubleProperty(0);
+	private final StringProperty paymentMethods = new SimpleStringProperty("Unknown");
+	private final BooleanProperty arrestThreat = new SimpleBooleanProperty(false);
+	private final BooleanProperty prisonThreat = new SimpleBooleanProperty(false);
+	private final BooleanProperty privacyThreat = new SimpleBooleanProperty(false);
+	private final StringProperty opererationPhrases = new SimpleStringProperty("Unknown");
+	private final StringProperty urgencyIndex = new SimpleStringProperty("Unknown");
+	
+	public ProfileDTO() {
+		
+	}
 
+	public StringProperty getListOfSourceOrgs() {
+		return listOfSourceOrgs;
+	}
+	
+	public void setListOfSourceOrgs(String organisations) {
+		this.listOfSourceOrgs.set(organisations);
+	}
+
+	public StringProperty getCallerNames() {
+		return callerNames;
+	}
+	
+	public void setListOfCallerName(String names) {
+		this.callerNames.set(names);
+	}
+
+	public BooleanProperty getTaxRelated() {
+		return taxRelated;
+	}
+	
+	public void setTaxRelated(boolean status) {
+		this.taxRelated.set(status);
+	}
+
+	public StringProperty getTaxConfidence() {
+		return taxConfidence;
+	}
+	
+	public void setTaxConfidence(String conf) {
+		this.taxConfidence.set(conf);
+	}
+
+	public DoubleProperty getAmountRequested() {
+		return amountRequested;
+	}
+	
+	public void setAmountRequired(Double amount) {
+		this.amountRequested.set(amount);
+	}
+
+	public StringProperty getPaymentMethods() {
+		return paymentMethods;
+	}
+	
+	public void setPaymentMethods(String methods) {
+		this.paymentMethods.set(methods);
+	}
+
+	public BooleanProperty getArrestThreat() {
+		return arrestThreat;
+	}
+	
+	public void setArrestThreat(boolean threat) {
+		this.arrestThreat.set(threat);
+	}
+
+	public BooleanProperty getPrisonThreat() {
+		return prisonThreat;
+	}
+	
+	public void setPrisonThreat(boolean threat) {
+		this.prisonThreat.set(threat);
+	}
+
+	public BooleanProperty getPrivacyThreat() {
+		return privacyThreat;
+	}
+	
+	public void setPrivacyThreat(boolean threat) {
+		this.privacyThreat.set(threat);
+	}
+
+	public StringProperty getOpererationPhrases() {
+		return opererationPhrases;
+	}
+	
+	public void setOperationPhrases(String phrases) {
+		this.opererationPhrases.set(phrases);
+	}
+
+	public StringProperty getUrgencyIndex() {
+		return urgencyIndex;
+	}
+	
+	public void setUrgencyIndex(String value) {
+		this.urgencyIndex.set(value);
+	}
 }
-
-/*
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-/**
- * Model class for a Person.
- *
- * @author Marco Jakob
- */
-/*
-public class Person {
-
-    private final StringProperty firstName;
-    private final StringProperty lastName;
-    private final StringProperty street;
-    private final IntegerProperty postalCode;
-    private final StringProperty city;
-    private final ObjectProperty<LocalDate> birthday;
-
-
-    public Person() {
-        this(null, null);
-    }
-
-  
-    public Person(String firstName, String lastName) {
-        this.firstName = new SimpleStringProperty(firstName);
-        this.lastName = new SimpleStringProperty(lastName);
-
-        // Some initial dummy data, just for convenient testing.
-        this.street = new SimpleStringProperty("some street");
-        this.postalCode = new SimpleIntegerProperty(1234);
-        this.city = new SimpleStringProperty("some city");
-        this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
-    }
-
-    public String getFirstName() {
-        return firstName.get();
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName.set(firstName);
-    }
-
-    public StringProperty firstNameProperty() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName.get();
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName.set(lastName);
-    }
-
-    public StringProperty lastNameProperty() {
-        return lastName;
-    }
-
-    public String getStreet() {
-        return street.get();
-    }
-
-    public void setStreet(String street) {
-        this.street.set(street);
-    }
-
-    public StringProperty streetProperty() {
-        return street;
-    }
-
-    public int getPostalCode() {
-        return postalCode.get();
-    }
-
-    public void setPostalCode(int postalCode) {
-        this.postalCode.set(postalCode);
-    }
-
-    public IntegerProperty postalCodeProperty() {
-        return postalCode;
-    }
-
-    public String getCity() {
-        return city.get();
-    }
-
-    public void setCity(String city) {
-        this.city.set(city);
-    }
-
-    public StringProperty cityProperty() {
-        return city;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday.get();
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday.set(birthday);
-    }
-
-    public ObjectProperty<LocalDate> birthdayProperty() {
-        return birthday;
-    }
-}
-*/
