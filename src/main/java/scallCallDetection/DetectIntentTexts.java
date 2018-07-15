@@ -68,6 +68,8 @@ public class DetectIntentTexts {
 			// Detect intents for each text input
 			for (String text : texts) {
 				System.out.println("Processing line " + (++index) + "/" + texts.length);
+				// set current line of text so we can print it on GUI
+				callProfileDTO.setCurrentLineOfText(text);
 				if (text.isEmpty()) continue;
 				// Set the text (hello) and language code (en-US) for the query
 				Builder textInput = TextInput.newBuilder().setText(text).setLanguageCode(languageCode);
@@ -94,6 +96,9 @@ public class DetectIntentTexts {
 				
 				double probOfScam = engine.getProbabilityOfScam(profList);
 				DecimalFormat df = new DecimalFormat("####0.00");
+				callProfileDTO.setProgressProbValue(probOfScam);
+				callProfileDTO.setProbabilityValue(df.format(probOfScam*100) + "%");
+				
 				System.out.println("The probability of this call at this point in time being a scam is " + df.format(probOfScam*100) + "%");
 				
 			}

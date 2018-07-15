@@ -30,38 +30,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("SCAMbot: PROTECTING AGAINST SCAM!");
         initRootLayout();
         
-        /*Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {           
-                    @Override
-                    protected Void call() throws Exception {
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {                          
-                            @Override
-                            public void run() {
-                                try{
-                                	showProfileOverview();
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();    
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();*/
-        
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-            	showProfileOverview();
-            }
-        });
-        
+        showProfileOverview();
         final Task<Void> task = new Task<Void>() {
         	@Override 
         	protected Void call() throws InterruptedException {

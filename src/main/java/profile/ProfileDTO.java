@@ -1,13 +1,7 @@
 package profile;
 
-import java.util.ArrayList;
-
-import org.netlib.util.booleanW;
-
-import entities.OperationPhrase;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,7 +9,8 @@ import javafx.beans.property.StringProperty;
 
 public class ProfileDTO {
 	//private final StringProperty 
-	private final StringProperty listOfSourceOrgs  = new SimpleStringProperty("Unknown");
+	private final StringProperty currentLineOfText = new SimpleStringProperty("");
+	private final StringProperty listOfSourceOrgs = new SimpleStringProperty("Unknown");
 	private final StringProperty callerNames = new SimpleStringProperty("Unknown");
 	private final BooleanProperty taxRelated =  new SimpleBooleanProperty(false);
 	private final StringProperty taxConfidence = new SimpleStringProperty("Unknown");;
@@ -26,6 +21,8 @@ public class ProfileDTO {
 	private final BooleanProperty privacyThreat = new SimpleBooleanProperty(false);
 	private final StringProperty opererationPhrases = new SimpleStringProperty("Unknown");
 	private final StringProperty urgencyIndex = new SimpleStringProperty("Unknown");
+	private final StringProperty probabilityValue = new SimpleStringProperty("0%");
+	private final DoubleProperty progressProbValue = new SimpleDoubleProperty(0);
 	
 	public ProfileDTO() {
 		
@@ -117,5 +114,29 @@ public class ProfileDTO {
 	
 	public void setUrgencyIndex(String value) {
 		this.urgencyIndex.set(value);
+	}
+
+	public StringProperty getProbabilityValue() {
+		return probabilityValue;
+	}
+	
+	public void setProbabilityValue(String value) {
+		this.probabilityValue.set(value);
+	}
+
+	public DoubleProperty getProgressProbValue() {
+		return progressProbValue;
+	}
+	
+	public void setProgressProbValue(Double value) {
+		this.progressProbValue.set(value);
+	}
+
+	public StringProperty getCurrentLineOfText() {
+		return currentLineOfText;
+	}
+	
+	public void setCurrentLineOfText(String phrase) {
+		this.currentLineOfText.set(phrase);
 	}
 }
