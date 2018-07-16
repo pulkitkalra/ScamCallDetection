@@ -100,13 +100,13 @@ public class DetectIntentTexts {
 				callProfileDTO.setProbabilityValue(df.format(probOfScam*100) + "%");
 				
 				System.out.println("The probability of this call at this point in time being a scam is " + df.format(probOfScam*100) + "%");
-				
+				//Thread.sleep(2000);
 			}
 			
 			ExportProfile.exportToCSV(csvOutputList);
 			Long totalTime = System.currentTimeMillis() - startTime;
 			totalTime.toString();
-			
+		
 		}
 	}
 	

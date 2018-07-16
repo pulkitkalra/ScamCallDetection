@@ -166,13 +166,13 @@ public class WekaClassifier implements DetectionEngine{
 
 
 			System.out.println(data.instance(1).stringValue(12));
-			double[] kNNprediction = _kNN.distributionForInstance(data.instance(1));
+			double[] NBprediction = _kNN.distributionForInstance(data.instance(1));
 			System.out.println("CLASSIFIER: NB");
-			for (int i=0; i<kNNprediction.length; i++){
-				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(kNNprediction[i]));
+			for (int i=0; i<NBprediction.length; i++){
+				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(NBprediction[i]));
 			}
 
-			return RFprediction[1];
+			return NBprediction[1];
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

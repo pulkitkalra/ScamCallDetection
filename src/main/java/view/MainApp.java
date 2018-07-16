@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -27,21 +28,20 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("SCAMbot: PROTECTING AGAINST SCAM!");
+        primaryStage.getIcons().add(new Image("view/logo.png"));
+        this.primaryStage.setTitle("Scaminator");
         initRootLayout();
         
         showProfileOverview();
         final Task<Void> task = new Task<Void>() {
         	@Override 
         	protected Void call() throws InterruptedException {
-        		updateMessage("Finding friends . . .");
         		try {
                 	DetectIntentTexts dit = new DetectIntentTexts(dto);
                     dit.start();
                 } catch (Exception e) {
         			e.printStackTrace();
         		}
-        		updateMessage("Finished.");
 				return null;
         	}            
         };
