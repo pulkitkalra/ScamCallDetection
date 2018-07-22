@@ -9,6 +9,8 @@ import entities.Organisation;
 import entities.PaymentMethod;
 import profile.CallAction;
 import profile.CallProfile;
+import rules.ActionRule;
+import rules.Rule;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
@@ -23,11 +25,14 @@ public class CallActionExtraction implements Extraction {
 	public void updateProfile(CallProfile profile) {
 		CallAction action = profile.getCallAction();
 		List<DFEntity> entityList = phrase.getEntities();
-
+		Rule actionRule = new ActionRule(action);
+		
 		for (DFEntity ent: entityList) {
-			String enitityName = ent.getEntityName();
-
-			if (enitityName.equals("IRS")) {
+			//String enitityName = ent.getEntityName();
+			actionRule.applyRule(ent);
+			//action = actionRule.
+			
+			/*if (enitityName.equals("IRS")) {
 				action.addPaymentReceiver(Organisation.IRS);
 			} else if (enitityName.equals("GovernmentEntity")) {
 				action.addPaymentReceiver(Organisation.GOVERNMENT_ENTITY);
@@ -58,7 +63,7 @@ public class CallActionExtraction implements Extraction {
 				action.addPaymentRequest(amount);
 			} else if (enitityName.equals("number")) {
 				action.addPaymentRequest(ent.getEntityValue().getNumberValue());
-			}
+			}*/
 		}
 	}
 

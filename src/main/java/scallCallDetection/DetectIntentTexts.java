@@ -29,8 +29,6 @@ import profile.CallProfile;
 import profile.ProfileDTO;
 import profile.ProfileDTOAdapter;
 
-
-
 /**
  * DialogFlow API Detect Intent sample with text inputs.
  */

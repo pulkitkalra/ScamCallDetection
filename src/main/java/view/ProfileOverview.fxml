@@ -373,15 +373,7 @@
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                        <children>
-                                          <Label alignment="TOP_CENTER" layoutX="255.0" layoutY="1.0" prefHeight="28.0" prefWidth="652.0" style="-fx-font-weight: bold; -fx-background-color: #ffffff; -fx-font-size: 18;" text="Call Progress Graph" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets top="3.0" />
-                                             </padding>
-                                          </Label>
-                                          <LineChart layoutY="27.0" prefHeight="199.0" prefWidth="652.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
+                                          <LineChart fx:id="probOfScamChart" prefHeight="226.0" prefWidth="652.0" title="Probablity of scam over time" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
