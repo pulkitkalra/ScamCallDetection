@@ -36,9 +36,7 @@ public class ActionRule extends Rule {
 				}
 				break;
 			case CURRENCY:
-				Struct s = ent.getEntityValue().getStructValue();
-				Double amount = s.getFieldsMap().get("amount").getNumberValue();
-				action.addPaymentRequest(amount);
+				action.addPaymentRequest(getPaymentAmount(ent));
 				break;
 			case NUMBER:
 				action.addPaymentRequest(ent.getEntityValue().getNumberValue());

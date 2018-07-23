@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import profile.ProfileDTO;
 import scallCallDetection.DetectIntentTexts;
+import view.MainApp;
 
 public class ProfileOverviewController {
 	private final Double scamDetectedThreshold = 90.0;

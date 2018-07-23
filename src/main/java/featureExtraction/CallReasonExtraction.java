@@ -10,6 +10,8 @@ import profile.CallAction;
 import profile.CallProfile;
 import profile.CallReason;
 import profile.CallSource;
+import rules.ReasonRule;
+import rules.Rule;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
@@ -26,12 +28,15 @@ public class CallReasonExtraction implements Extraction {
 		CallAction action = profile.getCallAction();
 		CallSource source = profile.getCallSource();
 		List<DFEntity> entityList = phrase.getEntities();
-		// no of bools is the number of boolean parameters to pass into updateConfidence method.
-		int numberOfBools = 0;
+
+		ReasonRule rule = new ReasonRule(reason, action, source);
 		// tax visited is the boolean representing that a 'tax' entity has already beeen found.
-		boolean taxVisited = false;
+		// int numberOfBools = 0;
+		// boolean taxVisited = false;
+		
 		for (DFEntity ent: entityList) {
-			if (!taxVisited && ent.getEntityName().equals("Tax")) {
+			rule.applyRule(ent);
+			/*if (!taxVisited && ent.getEntityName().equals("Tax")) {
 				// TODO: update the call to set call reason tax when we can determine action of call.
 				reason.setCallReasonTax(true, "");
 				numberOfBools++;
@@ -50,9 +55,10 @@ public class CallReasonExtraction implements Extraction {
 				Struct s = ent.getEntityValue().getStructValue();
 				Double amount = s.getFieldsMap().get("amount").getNumberValue();
 				action.addPaymentRequest(amount);
-			}
+			}*/
 		}
-
+		
+		int numberOfBools = rule.getNumberOfBools();
 		numberOfBools = (numberOfBools > 3) ? 3: numberOfBools;
 		boolean[] params = new boolean[numberOfBools];
 		Arrays.fill(params, true);

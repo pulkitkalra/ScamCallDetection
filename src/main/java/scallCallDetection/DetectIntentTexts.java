@@ -77,7 +77,7 @@ public class DetectIntentTexts {
 
 				// Performs the detect intent request
 				DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
-
+				
 				ConversationPhrase phrase = new ConversationPhrase(response);
 				extraction.processConversationPhrase(phrase);
 				CallProfile cp = extraction.getCallProfile();

@@ -9,6 +9,8 @@ import entities.PersonalInfo;
 import entities.ThreatEnum;
 import profile.CallProfile;
 import profile.Threat;
+import rules.Rule;
+import rules.ThreatRules;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
@@ -24,9 +26,10 @@ public class CallThreatExtraction implements Extraction {
 	public void updateProfile(CallProfile profile) {
 		Threat threat = profile.getCallThreat();
 		List<DFEntity> entityList = phrase.getEntities();
-
+		Rule rule = new ThreatRules(threat);
 		for (DFEntity ent: entityList) {
-			String entityName = ent.getEntityName();
+			rule.applyRule(ent);
+			/*String entityName = ent.getEntityName();
 			if (entityName.equals("Arrest")) {
 				threat.addArrestThreat(ThreatEnum.ARREST);
 			} else if (entityName.equals("Prison")) {
@@ -65,7 +68,7 @@ public class CallThreatExtraction implements Extraction {
 					threat.addPrivacyThreat(pInfo);
 				}
 				
-			}
+			}*/
 			
 		}
 	}
