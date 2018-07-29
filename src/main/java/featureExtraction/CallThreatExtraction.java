@@ -3,6 +3,7 @@ package featureExtraction;
 import java.util.List;
 
 import profile.CallProfile;
+import profile.CallReason;
 import profile.Threat;
 import rules.Rule;
 import rules.ThreatRules;
@@ -20,8 +21,9 @@ public class CallThreatExtraction implements Extraction {
 	@Override
 	public void updateProfile(CallProfile profile) {
 		Threat threat = profile.getCallThreat();
+		CallReason reason = profile.getCallReason();
 		List<DFEntity> entityList = phrase.getEntities();
-		Rule rule = new ThreatRules(threat);
+		Rule rule = new ThreatRules(threat, reason);
 		for (DFEntity ent: entityList) {
 			rule.applyRule(ent);
 		}

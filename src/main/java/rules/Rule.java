@@ -95,6 +95,8 @@ public abstract class Rule {
 				return MapType.TAX;
 			case "Operation_Phrase":
 				return MapType.CUSTOM_IRS;
+			case "given-name":
+				return MapType.NAME;
 			default:
 				return MapType.DEFAULT;
 		}
