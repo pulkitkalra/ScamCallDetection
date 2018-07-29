@@ -1,11 +1,6 @@
 package rules;
 
-import java.util.List;
-
-import com.google.protobuf.Value;
-
 import profile.CallSource;
-import rules.Rule.MapType;
 import scallCallDetection.DFEntity;
 
 public class IntroRule extends Rule {
@@ -30,7 +25,5 @@ public class IntroRule extends Rule {
 			default:
 				break;
 		}
-
 	}
-
 }

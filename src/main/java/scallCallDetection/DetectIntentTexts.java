@@ -1,9 +1,7 @@
 package scallCallDetection;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +18,6 @@ import com.google.cloud.storage.StorageOptions;
 
 import classification.DetectionEngine;
 import classification.WekaClassifier;
-import edu.stanford.nlp.util.Index;
-import edu.stanford.nlp.util.StringParsingTask;
 import export.ExportProfile;
 import export.ExportProfileAdapter;
 import featureExtraction.CallFeatureExtraction;

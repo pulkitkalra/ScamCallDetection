@@ -375,7 +375,7 @@
                                        <children>
                                           <LineChart fx:id="probOfScamChart" prefHeight="226.0" prefWidth="652.0" title="Probablity of scam over time" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
+                                              <NumberAxis side="BOTTOM" />
                                             </xAxis>
                                             <yAxis>
                                               <NumberAxis side="LEFT" />

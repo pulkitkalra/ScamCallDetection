@@ -2,7 +2,6 @@ package featureExtraction;
 
 import java.util.List;
 
-import entities.Organisation;
 import profile.CallProfile;
 import profile.CallSource;
 import rules.IntroRule;
@@ -24,15 +23,6 @@ public class CallIntroExtraction implements Extraction{
 		Rule rule = new IntroRule(source);
 		for (DFEntity ent: entityList) {
 			rule.applyRule(ent);
-			/*if (ent.getEntityName().equals("IRS")) {
-				source.addOrganisation(Organisation.IRS);
-			} else if (ent.getEntityName().equals("GovernmentEntity")) {
-				source.addOrganisation(Organisation.GOVERNMENT_ENTITY);
-			} else if (ent.getEntityName().equals("given-name")) {
-				source.addName(ent.getEntityValue().getStringValue());
-			}*/
 		}
-
 	}
-
 }

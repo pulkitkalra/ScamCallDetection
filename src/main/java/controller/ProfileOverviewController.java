@@ -3,26 +3,20 @@ package controller;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.http.cookie.SM;
-
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import profile.ProfileDTO;
-import scallCallDetection.DetectIntentTexts;
 import view.MainApp;
 
 public class ProfileOverviewController {
@@ -65,11 +59,13 @@ public class ProfileOverviewController {
 	private Label scamLabel;
 	@FXML
 	private LineChart<Number, Number> probOfScamChart;
+	
 	private final Long startTime;
 	private Series<Number, Number> series;
 
 	ExecutorService threadPool = Executors.newWorkStealingPool();
 	// Reference to the main application.
+	@SuppressWarnings("unused")
 	private MainApp mainApp;
 
 	/**
@@ -237,7 +233,8 @@ public class ProfileOverviewController {
 					public void run() {
 						double scamValue = newValue.doubleValue();
 						scamProbProgress.setProgress(scamValue);
-						Long programDuration = System.currentTimeMillis() - startTime;
+						Long programDuration = (System.currentTimeMillis() - startTime)/1000;
+						
 						series.getData().add(new Data<Number, Number>(programDuration, scamValue*100));
 						
 						if (scamValue > scamDetectedThreshold/100) {
@@ -271,24 +268,21 @@ public class ProfileOverviewController {
 
 	@FXML
 	private void initialize() {
+
 		addListners();
-		series = new XYChart.Series<>();
-		final NumberAxis xAxis = new NumberAxis();
-	    final NumberAxis yAxis = new NumberAxis();
-	    series.getData().add(new XYChart.Data<Number, Number>(1, 23));
-        series.getData().add(new XYChart.Data<Number, Number>(2, 14));
-        series.getData().add(new XYChart.Data<Number, Number>(3, 15));
-        series.getData().add(new XYChart.Data<Number, Number>(4, 24));
-        series.getData().add(new XYChart.Data<Number, Number>(5, 34));
-        series.getData().add(new XYChart.Data<Number, Number>(6, 36));
-        series.getData().add(new XYChart.Data<Number, Number>(7, 22));
-        series.getData().add(new XYChart.Data<Number, Number>(8, 45));
-        series.getData().add(new XYChart.Data<Number, Number>(9, 43));
-        series.getData().add(new XYChart.Data<Number, Number>(10, 17));
-        series.getData().add(new XYChart.Data<Number, Number>(11, 29));
-        series.getData().add(new XYChart.Data<Number, Number>(12, 25));
-		probOfScamChart = new LineChart<Number,Number>(xAxis, yAxis);
-		probOfScamChart.getData().add(series);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				series = new XYChart.Series<>();
+				series.setName("Probability of Scam");
+				final NumberAxis xAxis = new NumberAxis();
+			    final NumberAxis yAxis = new NumberAxis();
+			    xAxis.setLabel("Time");
+			    yAxis.setLabel("Probablity of Scam");
+				probOfScamChart.getData().add(series);
+			}
+		}); 
+		
 	}
 	/**
 	 * Is called by the main application to give a reference back to itself.

@@ -2,7 +2,6 @@ package rules;
 
 import java.util.List;
 
-import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
 
 import profile.CallAction;
