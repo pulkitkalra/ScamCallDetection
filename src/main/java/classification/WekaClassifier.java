@@ -106,13 +106,11 @@ public class WekaClassifier implements DetectionEngine{
 
 		try {
 			_randomForest = (RandomForest) SerializationHelper.read(new FileInputStream("dataset.model"));
-			_kNN = (NaiveBayes) SerializationHelper.read(new FileInputStream("dataset_nb.model"));
+			_kNN = (NaiveBayes) SerializationHelper.read(new FileInputStream("testNonScam.model"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("Could not find required dataset!");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

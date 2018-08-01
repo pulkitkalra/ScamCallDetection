@@ -139,4 +139,5 @@ public class ProfileDTO {
 	public void setCurrentLineOfText(String phrase) {
 		this.currentLineOfText.set(phrase);
 	}
+	
 }

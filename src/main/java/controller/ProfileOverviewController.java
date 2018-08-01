@@ -1,7 +1,13 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.netlib.util.booleanW;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +21,8 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import profile.ProfileDTO;
 import view.MainApp;
@@ -25,6 +33,8 @@ public class ProfileOverviewController {
 	private final Double scamUnlikely = 40.0;
 	
 	private ProfileDTO dto;
+	
+	private static final Map<String,String[]> dtoList = new HashMap<>();
 	@FXML
 	private Label orgList;
 	@FXML
@@ -78,13 +88,18 @@ public class ProfileOverviewController {
 	}
 
 	public void addListners() {
+		
 		dto.getCallerNames().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						callerNameList.setText(newValue);
+						if (newValue.isEmpty() && oldValue.isEmpty()) {
+							callerNameList.setText("No name(s) detected");
+						} else {
+							callerNameList.setText(newValue);
+						}
 					}
 				}); 
 			}
@@ -120,7 +135,8 @@ public class ProfileOverviewController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						taxRelated.setText(String.valueOf(newValue));
+						setIconForLabel(taxRelated,newValue);
+						//taxRelated.setText(String.valueOf(newValue));
 					}
 				}); 
 			}
@@ -145,7 +161,7 @@ public class ProfileOverviewController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						arrestThreat.setText(String.valueOf(newValue));
+						setIconForLabel(arrestThreat,newValue);
 					}
 				}); 
 			}
@@ -157,7 +173,7 @@ public class ProfileOverviewController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						prisonThreat.setText(String.valueOf(newValue));
+						setIconForLabel(prisonThreat,newValue);
 					}
 				}); 
 				
@@ -170,7 +186,7 @@ public class ProfileOverviewController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						privacyThreat.setText(String.valueOf(newValue));
+						setIconForLabel(privacyThreat,newValue);
 					}
 				}); 
 				
@@ -231,18 +247,22 @@ public class ProfileOverviewController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
+						
+						
 						double scamValue = newValue.doubleValue();
 						scamProbProgress.setProgress(scamValue);
 						Long programDuration = (System.currentTimeMillis() - startTime)/1000;
-						
-						series.getData().add(new Data<Number, Number>(programDuration, scamValue*100));
+						Data<Number, Number> data = new Data<>(programDuration, scamValue*100);
+						series.getData().add(data);
+						dtoList.put(data.getXValue().toString(), convertToArray(dto));
+						data.getNode().setOnMouseClicked(e -> updateDto(dtoList.get(data.getXValue().toString())));
 						
 						if (scamValue > scamDetectedThreshold/100) {
 							scamPane.setStyle("-fx-background-color: #ff5656;");
 							scamLabel.setText("SCAM DETECTED!");
 						} else if (scamValue > scamLikelyThreshold/100) {
 							scamPane.setStyle("-fx-background-color: #ffc156;");
-								scamLabel.setText("SCAM LIKELY");
+							scamLabel.setText("SCAM LIKELY");
 						} else if (scamValue > scamUnlikely/100) {
 							scamPane.setStyle("-fx-background-color: #eeff56;");
 							scamLabel.setText("SCAM UNLIKELY");
@@ -275,15 +295,55 @@ public class ProfileOverviewController {
 			public void run() {
 				series = new XYChart.Series<>();
 				series.setName("Probability of Scam");
-				final NumberAxis xAxis = new NumberAxis();
-			    final NumberAxis yAxis = new NumberAxis();
-			    xAxis.setLabel("Time");
-			    yAxis.setLabel("Probablity of Scam");
 				probOfScamChart.getData().add(series);
+				series.getData().add(new Data<Number, Number>(0, 0));
 			}
 		}); 
 		
 	}
+	
+	private String[] convertToArray(ProfileDTO currentDto) {
+		String[] array = new String[11];
+		array[0] = currentDto.getCallerNames().getValue();
+		array[1] = currentDto.getAmountRequested().doubleValue() + "";
+		array[2] = currentDto.getArrestThreat().getValue().toString();
+		array[3] = currentDto.getListOfSourceOrgs().getValue();
+		array[4] = currentDto.getOpererationPhrases().getValue();
+		array[5] = currentDto.getPaymentMethods().getValue();
+		array[6] = currentDto.getPrisonThreat().getValue().toString();
+		array[7] = currentDto.getPrivacyThreat().getValue().toString();
+		array[8] = currentDto.getTaxConfidence().getValue();
+		array[9] = currentDto.getTaxRelated().getValue().toString();
+		array[10] = currentDto.getUrgencyIndex().getValue();
+		
+		return array;
+	}
+	
+	private void updateDto(String[] stringDto) {
+		dto.setListOfCallerName(stringDto[0]);
+		dto.setAmountRequired(Double.valueOf(stringDto[1]));
+		dto.setArrestThreat(Boolean.valueOf(stringDto[2]));
+		dto.setListOfSourceOrgs(stringDto[3]);
+		dto.setOperationPhrases(stringDto[4]); // 
+		dto.setPaymentMethods(stringDto[5]);//
+		dto.setPrisonThreat(Boolean.valueOf(stringDto[6])); // 
+		dto.setPrivacyThreat(Boolean.valueOf(stringDto[7])); // 
+		dto.setTaxConfidence(stringDto[8]);
+		dto.setTaxRelated(Boolean.valueOf(stringDto[9]));
+		dto.setUrgencyIndex(stringDto[10]);
+	}
+	
+	private void setIconForLabel(Label label, boolean value) {
+		Image image;
+		label.setText("");
+		if (value) {
+			image = new Image("view/tick.png");
+		} else {
+			image = new Image("view/cross.png");
+		}
+		label.setGraphic(new ImageView(image));
+	}
+	
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
