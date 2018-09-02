@@ -18,7 +18,7 @@ public abstract class Rule {
 	public enum MapType {
 		ORGANISATION_MAP, THREAT_MAP, PAYMENT_MAP, CURRENCY, NUMBER,
 		NAME, PRIVACY_MAP, TAX, CUSTOM_IRS,
-		DEFAULT // DELETE THIS
+		DEFAULT 
 	}
 	
 	private static final Map<String, Organisation> organisationMap;

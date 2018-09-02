@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ProfileDTO {
-	//private final StringProperty 
+	
 	private final StringProperty currentLineOfText = new SimpleStringProperty("");
 	private final StringProperty listOfSourceOrgs = new SimpleStringProperty("Unknown");
 	private final StringProperty callerNames = new SimpleStringProperty("Unknown");

@@ -21,6 +21,7 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -72,6 +73,9 @@ public class ProfileOverviewController {
 	
 	private final Long startTime;
 	private Series<Number, Number> series;
+	private List<Data<Number, Number>> dataList = new ArrayList<>();
+	private final String[] profileLabelNames = new String[] {"Caller Names","Amount Required","Arrest Threat", "Organisation", "Operation Phrases",
+			"Payment Method", "Prison Threat", "Privacy Threat", "Tax Confidence", "Tax Related", "Urgency Index"};
 
 	ExecutorService threadPool = Executors.newWorkStealingPool();
 	// Reference to the main application.
@@ -247,15 +251,23 @@ public class ProfileOverviewController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						
-						
 						double scamValue = newValue.doubleValue();
 						scamProbProgress.setProgress(scamValue);
 						Long programDuration = (System.currentTimeMillis() - startTime)/1000;
 						Data<Number, Number> data = new Data<>(programDuration, scamValue*100);
+						dataList.add(data);
 						series.getData().add(data);
 						dtoList.put(data.getXValue().toString(), convertToArray(dto));
 						data.getNode().setOnMouseClicked(e -> updateDto(dtoList.get(data.getXValue().toString())));
+						
+						if (dataList.size() >= 2) {
+							String data1 = dataList.get(dataList.size() - 2).getXValue().toString();
+							String data2 = dataList.get(dataList.size() - 1).getXValue().toString();
+							String tooltip = getChangeString(dtoList.get(data1), dtoList.get(data2));
+							Tooltip tp = new Tooltip(tooltip);
+							tp.setStyle("-fx-font-size: 14");
+							Tooltip.install(data.getNode(), tp);
+						}
 						
 						if (scamValue > scamDetectedThreshold/100) {
 							scamPane.setStyle("-fx-background-color: #ff5656;");
@@ -331,6 +343,18 @@ public class ProfileOverviewController {
 		dto.setTaxConfidence(stringDto[8]);
 		dto.setTaxRelated(Boolean.valueOf(stringDto[9]));
 		dto.setUrgencyIndex(stringDto[10]);
+	}
+	
+	private String getChangeString(String[] string1, String[] string2) {
+		int index = 0;
+		String change = "";
+		for (String s: string2) {
+			if (!s.equals(string1[index])) {
+				change+= " " + profileLabelNames[index] + " = " + s + ";";
+			}
+			index++;
+		}
+		return "Change:" + change;
 	}
 	
 	private void setIconForLabel(Label label, boolean value) {
