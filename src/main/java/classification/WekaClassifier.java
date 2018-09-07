@@ -35,8 +35,7 @@ public class WekaClassifier implements DetectionEngine{
 	final public static String ATTRIBUTE_SCAM = "SCAM YES/NO?";
 
 	static ArrayList<Attribute> callAttributes = new ArrayList<Attribute>();
-	private RandomForest _randomForest;
-	private NaiveBayes _kNN;
+	private NaiveBayes _naiveBayes;
 
 	public void setup() {
 
@@ -105,8 +104,7 @@ public class WekaClassifier implements DetectionEngine{
 		callAttributes.add(new Attribute("@@SCAM YES/NO@@", classes));
 
 		try {
-			_randomForest = (RandomForest) SerializationHelper.read(new FileInputStream("dataset.model"));
-			_kNN = (NaiveBayes) SerializationHelper.read(new FileInputStream("testNonScam.model"));
+			_naiveBayes = (NaiveBayes) SerializationHelper.read(new FileInputStream("dataset.model"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("Could not find required dataset!");
@@ -135,36 +133,17 @@ public class WekaClassifier implements DetectionEngine{
 
 
 		data.add(instance);
-		data.add(instance);
 
-
-		Evaluation RFEvaluation;
-		Evaluation kNNEvaluation;
+		Evaluation NBEvaluation;
 		try {
-			RFEvaluation = new Evaluation(data);
-			RFEvaluation.evaluateModel(_randomForest, data);
-			kNNEvaluation = new Evaluation(data);
-			kNNEvaluation.evaluateModel(_kNN, data);
-			//		Evaluation NBEvaluation = new Evaluation(train);
-			//		NBEvaluation.evaluateModel(naiveBayes, data);
+			NBEvaluation = new Evaluation(data);
+			NBEvaluation.evaluateModel(_naiveBayes, data);
 
-			double RFlabel = _randomForest.classifyInstance(data.instance(0));
-			data.instance(0).setClassValue(RFlabel);
-//			double kNNlabel = _kNN.classifyInstance(data.instance(1));
-//			data.instance(1).setClassValue(kNNlabel);
-			double NBlabel = _kNN.classifyInstance(data.instance(1));
-			data.instance(1).setClassValue(NBlabel);
+			double NBlabel = _naiveBayes.classifyInstance(data.instance(0));
+			data.instance(0).setClassValue(NBlabel);
 
 			System.out.println(data.instance(0).stringValue(12));
-			double[] RFprediction = _randomForest.distributionForInstance(data.instance(0));
-			System.out.println("CLASSIFIER: RandomForest");
-			for (int i=0; i<RFprediction.length; i++){
-				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(RFprediction[i]));
-			}
-
-
-			System.out.println(data.instance(1).stringValue(12));
-			double[] NBprediction = _kNN.distributionForInstance(data.instance(1));
+			double[] NBprediction = _naiveBayes.distributionForInstance(data.instance(0));
 			System.out.println("CLASSIFIER: NB");
 			for (int i=0; i<NBprediction.length; i++){
 				System.out.println("Probability of class " + data.classAttribute().value(i) + " : " + Double.toString(NBprediction[i]));
