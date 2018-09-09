@@ -18,20 +18,23 @@ import com.google.cloud.storage.StorageOptions;
 
 import classification.DetectionEngine;
 import classification.WekaClassifier;
-import edu.stanford.nlp.util.Index;
-import edu.stanford.nlp.util.StringParsingTask;
 import export.ExportProfile;
 import export.ExportProfileAdapter;
 import featureExtraction.CallFeatureExtraction;
 import profile.CallProfile;
-
-
+import profile.ProfileDTO;
+import profile.ProfileDTOAdapter;
 
 /**
  * DialogFlow API Detect Intent sample with text inputs.
  */
 public class DetectIntentTexts {
-
+	private ProfileDTO callProfileDTO;
+	
+	public DetectIntentTexts(ProfileDTO dto) {
+		this.callProfileDTO = dto;
+	}
+	
 	/**
 	 * Returns the result of detect intent with texts as inputs.
 	 *
@@ -41,7 +44,7 @@ public class DetectIntentTexts {
 	 * @param sessionId Identifier of the DetectIntent session.
 	 * @param languageCode Language code of the query.
 	 */
-	public static void detectIntentTexts(String projectId, String[] texts, String sessionId,
+	public void detectIntentTexts(String projectId, String[] texts, String sessionId,
 			String languageCode) throws Exception {
 		// Instantiates a client
 		try (SessionsClient sessionsClient = SessionsClient.create()) {
@@ -59,6 +62,8 @@ public class DetectIntentTexts {
 			// Detect intents for each text input
 			for (String text : texts) {
 				System.out.println("Processing line " + (++index) + "/" + texts.length);
+				// set current line of text so we can print it on GUI
+				callProfileDTO.setCurrentLineOfText(text);
 				if (text.isEmpty()) continue;
 				// Set the text (hello) and language code (en-US) for the query
 				Builder textInput = TextInput.newBuilder().setText(text).setLanguageCode(languageCode);
@@ -68,10 +73,14 @@ public class DetectIntentTexts {
 
 				// Performs the detect intent request
 				DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
-
+				
 				ConversationPhrase phrase = new ConversationPhrase(response);
 				extraction.processConversationPhrase(phrase);
 				CallProfile cp = extraction.getCallProfile();
+				// Create Profile DTO:
+				ProfileDTOAdapter profileAdapter = new ProfileDTOAdapter(cp, callProfileDTO);
+				profileAdapter.updateProfileDTO();
+				// Create Export Profile.
 				ExportProfileAdapter adapter = new ExportProfileAdapter(cp);
 				String[] profList = adapter.getProfileList();
 				if (!csvOutputList.contains(profList)) {
@@ -81,18 +90,21 @@ public class DetectIntentTexts {
 				
 				double probOfScam = engine.getProbabilityOfScam(profList);
 				DecimalFormat df = new DecimalFormat("####0.00");
-				System.out.println("The probability of this call at this point in time being a scam is " + df.format(probOfScam*100) + "%");
+				callProfileDTO.setProgressProbValue(probOfScam);
+				callProfileDTO.setProbabilityValue(df.format(probOfScam*100) + "%");
 				
+				System.out.println("The probability of this call at this point in time being a scam is " + df.format(probOfScam*100) + "%");
+				//Thread.sleep(2000);
 			}
 			
 			ExportProfile.exportToCSV(csvOutputList);
 			Long totalTime = System.currentTimeMillis() - startTime;
 			totalTime.toString();
-			
+		
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public void start() throws Exception {
 		@SuppressWarnings("unused")
 		Storage storage = StorageOptions.newBuilder().build().getService();
 
