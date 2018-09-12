@@ -1,5 +1,6 @@
 package controller;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,25 +8,30 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.netlib.util.booleanW;
 
+import javafx.scene.control.Button;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
+
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import profile.ProfileDTO;
+import scallCallDetection.DetectIntentTexts;
 import view.MainApp;
 
 public class ProfileOverviewController {
@@ -70,6 +76,12 @@ public class ProfileOverviewController {
 	private Label scamLabel;
 	@FXML
 	private LineChart<Number, Number> probOfScamChart;
+	@FXML 
+	private TextField recordingText; 
+	@FXML
+	private Button startFile;
+	@FXML
+	private Button startRecording;
 	
 	private final Long startTime;
 	private Series<Number, Number> series;
@@ -291,6 +303,19 @@ public class ProfileOverviewController {
 					@Override
 					public void run() {
 						textArea.appendText(newValue + "\n");
+						
+					}
+				}); 
+			}
+		});
+		
+		dto.getRecordingText().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						recordingText.setText(newValue);
 					}
 				}); 
 			}
@@ -300,8 +325,49 @@ public class ProfileOverviewController {
 
 	@FXML
 	private void initialize() {
-
 		addListners();
+		startFile.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	System.out.println("clicked");
+		    	startRecording.setDisable(true);
+		    	final Task<Void> task = new Task<Void>() {
+		        	@Override 
+		        	protected Void call() throws InterruptedException {
+		        		try {
+		                	DetectIntentTexts dit = new DetectIntentTexts(dto, false);
+		                    dit.start();
+		                } catch (Exception e) {
+		        			e.printStackTrace();
+		        		}
+						return null;
+		        	}            
+		        };
+		        new Thread(task).start();
+		    }
+		});
+		
+		startRecording.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	System.out.println("clicked");
+		    	startFile.setDisable(true);
+		    	recordingText.setVisible(true);
+		    	
+		    	final Task<Void> task = new Task<Void>() {
+		        	@Override 
+		        	protected Void call() throws InterruptedException {
+		        		try {
+		                	DetectIntentTexts dit = new DetectIntentTexts(dto, true);
+		                    dit.start();
+		                } catch (Exception e) {
+		        			e.printStackTrace();
+		        		}
+						return null;
+		        	}            
+		        };
+		        new Thread(task).start();
+		    }
+		});
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {

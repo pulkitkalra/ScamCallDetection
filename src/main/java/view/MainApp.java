@@ -27,19 +27,6 @@ public class MainApp extends Application {
         initRootLayout();
         
         showProfileOverview();
-        final Task<Void> task = new Task<Void>() {
-        	@Override 
-        	protected Void call() throws InterruptedException {
-        		try {
-                	DetectIntentTexts dit = new DetectIntentTexts(dto);
-                    dit.start();
-                } catch (Exception e) {
-        			e.printStackTrace();
-        		}
-				return null;
-        	}            
-        };
-        new Thread(task).start();
     }
 
     /**
@@ -77,7 +64,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             ProfileOverviewController controller = loader.getController();
             controller.setMainApp(this);
-            this.dto = controller.getProfileDTO();
+            //this.dto = controller.getProfileDTO();
         } catch (IOException e) {
             e.printStackTrace();
         }
