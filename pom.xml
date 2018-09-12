@@ -81,6 +81,17 @@
 		<artifactId>weka-stable</artifactId>
 		<version>3.8.2</version>
 	</dependency>
-	
+	<!-- https://mvnrepository.com/artifact/com.ibm.watson.developer_cloud/core -->
+	<dependency>
+	    <groupId>com.ibm.watson.developer_cloud</groupId>
+	    <artifactId>core</artifactId>
+	    <version>6.5.1</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.ibm.watson.developer_cloud/speech-to-text -->
+	<dependency>
+	    <groupId>com.ibm.watson.developer_cloud</groupId>
+	    <artifactId>speech-to-text</artifactId>
+	    <version>6.5.1</version>
+	</dependency>
 	</dependencies>
 </project>
