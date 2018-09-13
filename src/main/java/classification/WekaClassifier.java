@@ -2,21 +2,14 @@ package classification;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.lazy.IBk;
-import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instances;
 import weka.core.SerializationHelper;
-import weka.core.converters.ConverterUtils;
-import weka.gui.SysErrLog;
 
 public class WekaClassifier implements DetectionEngine{
 	final public static String ATTRIBUTE_IRS_STATUS = "IRS Status";
@@ -158,16 +151,6 @@ public class WekaClassifier implements DetectionEngine{
 		}
 
 	}
-	
-//	public static void main(String[] args){
-//		WekaClassifier test = new WekaClassifier();
-//		test.setup();
-//		String[] profileInstance = {"IRS","FALSE","NONE","FALSE","FALSE","FALSE","FALSE","LOW","NONE","NONE","FALSE","NONE","NONE"};
-//		
-//		double isScam = test.getProbabilityOfScam(profileInstance);
-//		DecimalFormat df = new DecimalFormat("####0.00");
-//		System.out.println("The probability of this call at this point in time being a scam is " + df.format(isScam*100) + "%");
-//	}
 }
 
 

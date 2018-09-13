@@ -28,3 +28,12 @@ hs_err_pid*
 5ddd6a8801b6.json
 .settings/org.eclipse.jdt.core.prefs
 output.csv
+*.properties
+target/maven-archiver/pom.properties
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+target/surefire-reports/Defenders.ScallCallDetection.AppTest.txt
+target/surefire-reports/TEST-Defenders.ScallCallDetection.AppTest.xml
+.settings/org.eclipse.core.resources.prefs
