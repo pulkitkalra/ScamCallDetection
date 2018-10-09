@@ -38,7 +38,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-background-color: #1e74ff;" text="Start Recording" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                      <Button fx:id="startRecording" alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-background-color: #1e74ff;" text="Start Recording" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -57,7 +57,7 @@
                            </padding>
                         </Label>
                         <Button alignment="CENTER" layoutX="15.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="93.0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-background-color: #636363;" text="Select File" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button alignment="CENTER" layoutX="15.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-background-color: #1e74ff;" text="Start From File" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="startFile" alignment="CENTER" layoutX="15.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-background-color: #1e74ff;" text="Start From File" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <Button alignment="CENTER" layoutX="642.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-background-color: #ff2626;" text="STOP" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <ProgressIndicator maxHeight="30.0" maxWidth="30.0" progress="0.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
                         <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="25.0" prefHeight="32.0" prefWidth="652.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Processing..." GridPane.columnIndex="6">
@@ -70,6 +70,11 @@
                         </Label>
                      </children>
                   </GridPane>
+                  <TextField fx:id="recordingText" editable="false" layoutX="167.0" layoutY="14.0" prefHeight="40.0" prefWidth="646.0" promptText="Listening ..." visible="false" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="285.0" AnchorPane.topAnchor="14.0">
+                     <font>
+                        <Font name="Arial Unicode MS" size="20.0" />
+                     </font>
+                  </TextField>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

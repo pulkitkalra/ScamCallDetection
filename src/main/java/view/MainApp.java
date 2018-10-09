@@ -4,42 +4,34 @@ import java.io.IOException;
 
 import controller.ProfileOverviewController;
 import javafx.application.Application;
-import javafx.concurrent.Task;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import profile.ProfileDTO;
-import scallCallDetection.DetectIntentTexts;
+import javafx.stage.WindowEvent;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ProfileDTO dto;
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         primaryStage.getIcons().add(new Image("view/logo.png"));
         this.primaryStage.setTitle("Scaminator");
         initRootLayout();
-        
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+               Platform.exit();
+               System.exit(0);
+            }
+         });
         showProfileOverview();
-        final Task<Void> task = new Task<Void>() {
-        	@Override 
-        	protected Void call() throws InterruptedException {
-        		try {
-                	DetectIntentTexts dit = new DetectIntentTexts(dto);
-                    dit.start();
-                } catch (Exception e) {
-        			e.printStackTrace();
-        		}
-				return null;
-        	}            
-        };
-        new Thread(task).start();
     }
 
     /**
@@ -77,7 +69,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             ProfileOverviewController controller = loader.getController();
             controller.setMainApp(this);
-            this.dto = controller.getProfileDTO();
+            //this.dto = controller.getProfileDTO();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,6 +10,7 @@ import javafx.beans.property.StringProperty;
 public class ProfileDTO {
 	
 	private final StringProperty currentLineOfText = new SimpleStringProperty("");
+	private final StringProperty recordingText = new SimpleStringProperty("");
 	private final StringProperty listOfSourceOrgs = new SimpleStringProperty("Unknown");
 	private final StringProperty callerNames = new SimpleStringProperty("Unknown");
 	private final BooleanProperty taxRelated =  new SimpleBooleanProperty(false);
@@ -138,6 +139,14 @@ public class ProfileDTO {
 	
 	public void setCurrentLineOfText(String phrase) {
 		this.currentLineOfText.set(phrase);
+	}
+	
+	public StringProperty getRecordingText() {
+		return recordingText;
+	}
+	
+	public void setRecordingText(String phrase) {
+		this.recordingText.set(phrase);
 	}
 	
 }

@@ -2,21 +2,14 @@ package classification;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.lazy.IBk;
-import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instances;
 import weka.core.SerializationHelper;
-import weka.core.converters.ConverterUtils;
-import weka.gui.SysErrLog;
 
 /**
  * A class that utilises the Weka machine learning library suite to classify an input call profile.
@@ -170,7 +163,6 @@ public class WekaClassifier implements DetectionEngine{
 		}
 
 	}
-	
 }
 
 
