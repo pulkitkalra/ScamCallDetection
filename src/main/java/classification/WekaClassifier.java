@@ -11,6 +11,11 @@ import weka.core.DenseInstance;
 import weka.core.Instances;
 import weka.core.SerializationHelper;
 
+/**
+ * A class that utilises the Weka machine learning library suite to classify an input call profile.
+ * @author Darius
+ *
+ */
 public class WekaClassifier implements DetectionEngine{
 	final public static String ATTRIBUTE_IRS_STATUS = "IRS Status";
 	final public static String ATTRIBUTE_TAX_RELATED = "Tax related";
@@ -30,6 +35,10 @@ public class WekaClassifier implements DetectionEngine{
 	static ArrayList<Attribute> callAttributes = new ArrayList<Attribute>();
 	private NaiveBayes _naiveBayes;
 
+	/***
+	 * A function to build the classifier by setting up call profile features
+	 * and importing a model file.
+	 */
 	public void setup() {
 
 		ArrayList<String> irsStatus = new ArrayList<String>();
@@ -106,10 +115,14 @@ public class WekaClassifier implements DetectionEngine{
 		}
 	}
 
+	/***
+	 * A function to classify the incoming instance with a probability of scam.
+	 */
 	public double getProbabilityOfScam(String[] profileInstance) {	
 		Instances data = new Instances("scamcall", callAttributes, 0);
 		data.setClassIndex(data.numAttributes() - 1);
 
+		// Create a WEKA compatible instance object using feature values from the input profile instance.
 		DenseInstance instance = new DenseInstance(13);
 		instance.setValue(data.attribute(ATTRIBUTE_IRS_STATUS), profileInstance[0]);
 		instance.setValue(data.attribute(ATTRIBUTE_TAX_RELATED), profileInstance[1]);
@@ -124,7 +137,7 @@ public class WekaClassifier implements DetectionEngine{
 		instance.setValue(data.attribute(ATTRIBUTE_COURT_MENTIONED), profileInstance[10]);
 		instance.setValue(data.attribute(ATTRIBUTE_URGENCY_INDEX), profileInstance[11]);	
 
-
+		// Add the particular utterance call profile instance to the dataset (to be classified)
 		data.add(instance);
 
 		Evaluation NBEvaluation;
@@ -144,7 +157,6 @@ public class WekaClassifier implements DetectionEngine{
 
 			return NBprediction[1];
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("Profile instance unable to be evaluated!");
 			return 0;
