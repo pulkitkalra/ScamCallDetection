@@ -1,8 +1,8 @@
-# ScamCallDetection
-This repository contains the source code for our Part 4 Project: Project #56: Scam Call Detection.
+# SCAMINATOR
+*Detecting scam one line at a time*<br/>
 
-**Contributors**: Pulkit Kalra (pkal608) and Darius Au (dau782)
-
+This repository contains the source code for our Part 4 Project: Project #56: Scam Call Detection.<br/>
+**Contributors**: Pulkit Kalra (pkal608) and Darius Au (dau782)<br/>
 **Supervisor**: Prof. Gill Dobbie
 
 ## Overview
