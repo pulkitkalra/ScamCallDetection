@@ -16,6 +16,7 @@ In an era of increased interconnectivity with the emergence of the smartphone, p
    a. Download the json key from here: https://files.fm/u/kxkgxez6
    b. Create a new Environment Variable in Eclipse Run Configurations. The name of the variable should be: GOOGLE_APPLICATION_CREDENTIALS,
       and the value is the absolute path of the downloaded file. See image below:
+      
       ![key](https://i.imgur.com/ICealBl.png)
       
 5. The program can be executed by running the program from the main method in `view/MainApp.java`
