@@ -10,6 +10,11 @@ import rules.ThreatRules;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
+/**
+ * Call Threat extraction extracts threat rules from conversation phrases.
+ * @author Pulkit
+ *
+ */
 public class CallThreatExtraction implements Extraction {
 	
 	private ConversationPhrase phrase;

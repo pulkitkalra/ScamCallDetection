@@ -1,5 +1,12 @@
 package entities;
 
+/**
+ * The Personal Information Enum represents entities that correspond to
+ * sensitive and confidential user information. E.g. name, number, address
+ * and anything else identity related. 
+ * @author Pulkit
+ *
+ */
 public enum PersonalInfo {
 	IDENTITY ("identity"),
 	SOCIAL_SECURITY ("social security"),

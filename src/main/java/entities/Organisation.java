@@ -1,5 +1,11 @@
 package entities;
 
+/**
+ * The Organisation Enum represents Entitites that correspond to
+ * operation phrases. E.g. "disconnect", "record" in sentences such as 
+ * "please do not disconnect this line, as it is federally recorded"...
+ * @author Pulkit
+ */
 public enum Organisation {
 	IRS ("IRS"),
 	GOVERNMENT_ENTITY ("GovernmentEntity"),

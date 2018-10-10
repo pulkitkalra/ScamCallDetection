@@ -3,6 +3,12 @@ package rules;
 import profile.CallSource;
 import scallCallDetection.DFEntity;
 
+/**
+ * IntroRule inherits from Rule. This class defines behaviour associated
+ * with intents related to CallIntro. 
+ * @author Pulkit
+ *
+ */
 public class IntroRule extends Rule {
 	private CallSource source;
 	
@@ -11,6 +17,10 @@ public class IntroRule extends Rule {
 		this.source = source;
 	}
 	
+	/**
+	 * Apply rules based on entity that is passed in as input.
+	 * This currently includes organisations/ name in source. 
+	 */
 	@Override
 	public void applyRule(DFEntity ent) {
 		String entityName = ent.getEntityName();

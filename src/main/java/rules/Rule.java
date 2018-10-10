@@ -13,6 +13,13 @@ import entities.PersonalInfo;
 import entities.ThreatEnum;
 import scallCallDetection.DFEntity;
 
+/**
+ * The Rule abstract class contains definitions for the rules used in 
+ * feature extraction classes. These rules are constructed using HashMaps 
+ * and Enums.
+ * @author Pulkit
+ *
+ */
 public abstract class Rule {
 	
 	public enum MapType {
@@ -20,7 +27,7 @@ public abstract class Rule {
 		NAME, PRIVACY_MAP, TAX, CUSTOM_IRS,
 		DEFAULT 
 	}
-	
+	// initialise organisation map
 	private static final Map<String, Organisation> organisationMap;
 	static {
 		Map<String, Organisation> map = new HashMap<>();
@@ -31,7 +38,7 @@ public abstract class Rule {
 		
 		organisationMap = Collections.unmodifiableMap(map);
 	}
-	
+	// initialise threat map
 	private static final Map<String, ThreatEnum> threatMap;
 	static {
 		Map<String, ThreatEnum> map = new HashMap<>();
@@ -40,7 +47,7 @@ public abstract class Rule {
 		
 		threatMap = Collections.unmodifiableMap(map);
 	}
-	
+	// initialise payment method map
 	private static final Map<String, PaymentMethod> pmMap;
 	static {
 		Map<String, PaymentMethod> map = new HashMap<>();
@@ -51,7 +58,7 @@ public abstract class Rule {
 		
 		pmMap = Collections.unmodifiableMap(map);
 	}
-	
+	// initialise private info map
 	private static final Map<String, PersonalInfo> privateInfoMap;
 	static {
 		Map<String, PersonalInfo> map = new HashMap<>();
@@ -63,7 +70,7 @@ public abstract class Rule {
 
 		privateInfoMap = Collections.unmodifiableMap(map);
 	}
-	
+	// initialise op phrase map
 	private static final Map<String, OperationPhrase> operationPhraseMap;
 	static {
 		Map<String, OperationPhrase> map = new HashMap<>();
@@ -74,7 +81,12 @@ public abstract class Rule {
 
 		operationPhraseMap = Collections.unmodifiableMap(map);
 	}
-	
+	/**
+	 * The method must define behaviour that should be applied to an entity
+	 * to process the information within it, so it can be appropriately mapped
+	 * to a call profile feature. 
+	 * @param entity
+	 */
 	public abstract void applyRule(DFEntity entity);
 	
 	public MapType getMapType(String entityName) {
@@ -102,6 +114,11 @@ public abstract class Rule {
 		}
 	}
 	
+	/**
+	 * Extracts and retrieves payment amount based on an entity type. 
+	 * @param ent
+	 * @return
+	 */
 	public Double getPaymentAmount(DFEntity ent) {
 		Struct s = ent.getEntityValue().getStructValue();
 		Double amount = s.getFieldsMap().get("amount").getNumberValue();

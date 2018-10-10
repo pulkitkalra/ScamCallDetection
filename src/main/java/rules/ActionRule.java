@@ -7,6 +7,12 @@ import com.google.protobuf.Value;
 import profile.CallAction;
 import scallCallDetection.DFEntity;
 
+/**
+ * ActionRule inherits from Rule. This class defines behaviour associated
+ * with intents related to CallAction. 
+ * @author Pulkit
+ *
+ */
 public class ActionRule extends Rule {
 	private CallAction action;
 	public ActionRule (CallAction action) {
@@ -14,11 +20,10 @@ public class ActionRule extends Rule {
 		this.action = action;
 	}
 	
-	/*public void applyRule(DFEntity ent, CallAction action) {
-		this.action = action;
-		applyRule(ent);
-	}*/
-	
+	/**
+	 * Applies rules based on which type of entity is detected within an
+	 * intent that is passed in as input.
+	 */
 	@Override
 	public void applyRule(DFEntity ent) {
 		String entityName = ent.getEntityName();
@@ -43,8 +48,5 @@ public class ActionRule extends Rule {
 			default:
 				break;
 		}
-		
 	}
-
-
 }

@@ -6,7 +6,7 @@ import java.io.Writer;
 /**
  * Class is used to perform the formatting required to write to a file in
  * the CSV format.
- * Thanks to Orion Health's opens-source RLCAnalyser!
+ * Thanks to Orion Health's open-source RLCAnalyser!
  */
 public class CSVUtils {
 

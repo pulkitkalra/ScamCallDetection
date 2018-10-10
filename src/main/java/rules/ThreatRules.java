@@ -8,6 +8,12 @@ import profile.CallReason;
 import profile.Threat;
 import scallCallDetection.DFEntity;
 
+/**
+ * ThreatRules inherits from rule. This class defines behaviour associated
+ * with intents related to Threat and CallReason intent. 
+ * @author Pulkit
+ *
+ */
 public class ThreatRules extends Rule {
 	private Threat threat; 
 	private CallReason reason;
@@ -18,6 +24,10 @@ public class ThreatRules extends Rule {
 		this.reason = reason;
 	}
 	
+	/**
+	 * Apply rule based on any threats detected to arrest, prison, money
+	 * or privacy related threats.
+	 */
 	@Override
 	public void applyRule(DFEntity ent) {
 		String entityName = ent.getEntityName();

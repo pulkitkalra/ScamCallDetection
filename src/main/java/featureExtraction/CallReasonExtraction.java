@@ -11,6 +11,11 @@ import rules.ReasonRule;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
+/**
+ * Call Reason extraction extracts reason rules from conversation phrases.
+ * @author Pulkit
+ *
+ */
 public class CallReasonExtraction implements Extraction {
 	private ConversationPhrase phrase;
 

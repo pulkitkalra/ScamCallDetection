@@ -1,6 +1,5 @@
 package scallCallDetection;
 
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -31,10 +30,11 @@ public class SpeechAudioSocket {
 		setTextQueue(new LinkedBlockingQueue<>());
 	}
 	/**
-	 * The main method.
+	 * Convert speech sample to string with IBM Watson SDK.
+	 * This method is synchronized which allows safe thread management
 	 *
 	 * @param args the arguments
-	 * @throws Exception the exception
+	 * @throws Exception
 	 */
 	public synchronized void convertSpeechToText() throws Exception {
 		SpeechToText service = new SpeechToText();
@@ -98,7 +98,8 @@ public class SpeechAudioSocket {
 	public Queue<String> getTextQueue() {
 		return textQueue;
 	}
-	public void setTextQueue(BlockingQueue blockingQueue) {
+	
+	public void setTextQueue(BlockingQueue<String> blockingQueue) {
 		SpeechAudioSocket.textQueue = blockingQueue;
 	}
 }

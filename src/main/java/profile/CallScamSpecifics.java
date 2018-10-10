@@ -6,6 +6,12 @@ import entities.OperationPhrase;
 import entities.Organisation;
 import entities.ThreatEnum;
 
+/**
+ * The CallScamSpecific abstraction enforces behavior related to specific features of an IRS scam.
+ * This includes states and behaviours that do not fit into any other existing categories.
+ * @author Pulkit
+ *
+ */
 public interface CallScamSpecifics {
 	
 	int getTimesCourtMentioned();

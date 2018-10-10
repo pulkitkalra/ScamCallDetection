@@ -34,6 +34,14 @@ import profile.ProfileDTO;
 import scallCallDetection.DetectIntentTexts;
 import view.MainApp;
 
+/**
+ * The ProfileOverviewController is a controller class that handles data
+ * from a call profile and publishes to the JavaFX view.
+ * 
+ * This class contains the listeners for all fields in the view.
+ * @author Pulkit
+ *
+ */
 public class ProfileOverviewController {
 	private final Double scamDetectedThreshold = 90.0;
 	private final Double scamLikelyThreshold = 60.0;
@@ -102,9 +110,11 @@ public class ProfileOverviewController {
 		dto = new ProfileDTO();
 		startTime = System.currentTimeMillis();
 	}
-
+	
+	/**
+	 * Add all listeners for fields in the view. 
+	 */
 	public void addListners() {
-		
 		dto.getCallerNames().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -322,7 +332,13 @@ public class ProfileOverviewController {
 		});
 
 	}
-
+	
+	/**
+	 * Initialize JavaFX App based on the type of button that is pressed by user.
+	 * Case 1: Start by File: Renders the file view and initializes the appropriate NLP method.
+	 * Case 2: Start by Recording: Renders the live audio recording view and initializes 
+	 * 	       the appropriate NLP method.
+	 */
 	@FXML
 	private void initialize() {
 		addListners();
@@ -380,6 +396,12 @@ public class ProfileOverviewController {
 		
 	}
 	
+	/**
+	 * Convert a Profile DTO object to an array.
+	 * An array of type String is returned. 
+	 * @param currentDto
+	 * @return
+	 */
 	private String[] convertToArray(ProfileDTO currentDto) {
 		String[] array = new String[11];
 		array[0] = currentDto.getCallerNames().getValue();
@@ -397,6 +419,10 @@ public class ProfileOverviewController {
 		return array;
 	}
 	
+	/**
+	 * Update the DTO object based on input string representation of another Profile DTO.
+	 * @param stringDto
+	 */
 	private void updateDto(String[] stringDto) {
 		dto.setListOfCallerName(stringDto[0]);
 		dto.setAmountRequired(Double.valueOf(stringDto[1]));
@@ -411,6 +437,14 @@ public class ProfileOverviewController {
 		dto.setUrgencyIndex(stringDto[10]);
 	}
 	
+	/**
+	 * Get a string that represents the changes in one node to another on the 
+	 * line graph. This string delimts changes using ';'.
+	 * 
+	 * @param string1
+	 * @param string2
+	 * @return
+	 */
 	private String getChangeString(String[] string1, String[] string2) {
 		int index = 0;
 		String change = "";
@@ -423,6 +457,11 @@ public class ProfileOverviewController {
 		return "Change:" + change;
 	}
 	
+	/**
+	 * Set icon for Privacy/ Prison/ Court labels.
+	 * @param label
+	 * @param value
+	 */
 	private void setIconForLabel(Label label, boolean value) {
 		Image image;
 		label.setText("");

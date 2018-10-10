@@ -9,6 +9,11 @@ import rules.Rule;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
+/**
+ * Call Action extraction extracts action rules from conversation phrases.
+ * @author Pulkit
+ *
+ */
 public class CallActionExtraction implements Extraction {
 	private ConversationPhrase phrase;
 

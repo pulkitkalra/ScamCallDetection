@@ -1,5 +1,12 @@
 package profile;
 
+/**
+ * CallProfileImp is the implementation of the abstract CallProfile. 
+ * Currently, the implementation defines and initialises a call source,
+ * call reason, call action, threats and any other scam specifics. 
+ * @author Pulkit
+ *
+ */
 public class CallProfileImp implements CallProfile {
 	
 	private CallSource source;
@@ -9,7 +16,7 @@ public class CallProfileImp implements CallProfile {
 	private Threat threat;
 	
 	/**
-	 * Should only be instantiated once. MAKE IT SINGLETON?
+	 * Should only be instantiated once. Convert to singleton in future.
 	 */
 	public CallProfileImp() {
 		this.source = new CallSourceImp();
