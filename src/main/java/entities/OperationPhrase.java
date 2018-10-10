@@ -1,7 +1,7 @@
 package entities;
 
 /**
- * The operation Phrase Enum represents Entitites that correspond to
+ * The operation Phrase Enum represents Entities that correspond to
  * operation phrases. E.g. "disconnect", "record" in sentences such as 
  * "please do not disconnect this line, as it is federally recorded"...
  * @author Pulkit
