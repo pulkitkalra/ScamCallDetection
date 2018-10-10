@@ -6,6 +6,13 @@ import profile.CallReason;
 import profile.CallSource;
 import scallCallDetection.DFEntity;
 
+/**
+ * ReasonRule inherits from Rule. This class defines behaviour associated
+ * with intents related to CallReason, CallAction and CallSource. 
+ * In effect, any intents that might provide cues about the context of a conversation.
+ * @author Pulkit
+ *
+ */
 public class ReasonRule extends Rule {
 	private CallReason reason;
 	private CallAction action;
@@ -22,6 +29,10 @@ public class ReasonRule extends Rule {
 		this.taxVisited = false;
 	}
 	
+	/**
+	 * Apply rule in accordance with the number of times tax-related intents/
+	 * entities are detected.
+	 */
 	@Override
 	public void applyRule(DFEntity ent) {
 		String entityName = ent.getEntityName();

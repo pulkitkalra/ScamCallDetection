@@ -1,5 +1,11 @@
 package entities;
 
+/**
+ * The Payment Method Enum represents entities that correspond to
+ * methods of payment. E.g. gift card, tax voucher, bank card etc.
+ * @author Pulkit
+ *
+ */
 public enum PaymentMethod {
 	BANK_CARD ("bank card"),
 	TRANSFER ("transfer"),

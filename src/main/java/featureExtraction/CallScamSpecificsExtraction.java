@@ -9,6 +9,11 @@ import rules.Rule;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
+/**
+ * Call ScamSpecifics extraction extracts scam specific rules from conversation phrases.
+ * @author Pulkit
+ *
+ */
 public class CallScamSpecificsExtraction implements Extraction {
 	private ConversationPhrase phrase;
 	private String intentName;

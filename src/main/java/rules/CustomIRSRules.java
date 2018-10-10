@@ -7,6 +7,12 @@ import com.google.protobuf.Value;
 import profile.CallScamSpecifics;
 import scallCallDetection.DFEntity;
 
+/**
+ * Custom IRS Rule inherits from rule. This class defines behaviour associated
+ * with intents related to CallScamSpecifics. 
+ * @author Pulkit
+ *
+ */
 public class CustomIRSRules extends Rule{
 	private CallScamSpecifics callSpecifics;
 	private String intentName;
@@ -16,7 +22,10 @@ public class CustomIRSRules extends Rule{
 		this.callSpecifics = callSpecifics;
 		this.intentName = intentName;
 	}
-
+	
+	/**
+	 * Applies rule based on the intent detected.
+	 */
 	@Override
 	public void applyRule(DFEntity ent) {
 		if (intentName.equals("Call_Urgency")) {
@@ -28,7 +37,11 @@ public class CustomIRSRules extends Rule{
 		}
 
 	}
-
+	
+	/**
+	 * Define rule related to call authority: i.e. related to courts/ law.
+	 * @param ent
+	 */
 	private void callAuthorityRule(DFEntity ent) {
 		String entityName = ent.getEntityName();
 		MapType type = getMapType(entityName);
@@ -50,7 +63,11 @@ public class CustomIRSRules extends Rule{
 			break;
 		}	
 	}
-
+	
+	/**
+	 * Define rule related to courts mention and any threats related to those.
+	 * @param ent
+	 */
 	private void callPhrasesRule(DFEntity ent) {
 		String entityName = ent.getEntityName();
 		MapType type = getMapType(entityName);

@@ -12,6 +12,12 @@ import entities.PaymentMethod;
 import entities.PersonalInfo;
 import entities.ThreatEnum;
 
+/**
+ * The ProfileDTOAdapter is the middleware that converts CallProfiles into their
+ * respective DTOs, so the information in the profile can be published to the view.
+ * @author Pulkit
+ *
+ */
 public class ProfileDTOAdapter {
 	
 	private ProfileDTO profileDTO;

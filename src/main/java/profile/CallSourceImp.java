@@ -5,6 +5,12 @@ import java.util.List;
 
 import entities.Organisation;
 
+/**
+ * The CallSourceImp defines states related to the caller's details and origin.
+ * Currently this captures names, organization, location etc. 
+ * @author Pulkit
+ *
+ */
 public class CallSourceImp implements CallSource {
 	
 	private List<Organisation> organisations;

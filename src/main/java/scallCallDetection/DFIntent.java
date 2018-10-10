@@ -2,6 +2,11 @@ package scallCallDetection;
 
 import com.google.cloud.dialogflow.v2.Intent;
 
+/**
+ * DFIntent represents a Java-equivalent of Dialogflow's intents.
+ * @author Pulkit
+ *
+ */
 public class DFIntent {
 	private Intent intent;
 	private float detectionCondifence;

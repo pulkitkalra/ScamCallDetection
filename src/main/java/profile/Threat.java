@@ -6,6 +6,7 @@ import entities.Organisation;
 import entities.PersonalInfo;
 import entities.ThreatEnum;
 
+
 public interface Threat {
 	
 	void addArrestThreat(ThreatEnum threat);

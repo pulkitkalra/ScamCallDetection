@@ -7,6 +7,14 @@ import entities.Organisation;
 import entities.PersonalInfo;
 import entities.ThreatEnum;
 
+/**
+ * The ThreatImp defines state related to threats made in a conversation phrase.
+ * It captures any threatening phrases with regards to prison and arrests.
+ * These threats can be related to which organisation are making and who the
+ * threat is directed towards.
+ * @author Pulkit
+ *
+ */
 public class ThreatImp implements Threat {
 	
 	private List<ThreatEnum> arrestThreat;

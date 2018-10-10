@@ -6,6 +6,12 @@ import java.util.List;
 import entities.Organisation;
 import entities.PaymentMethod;
 
+/**
+ * The CallAction class defines state related to demands made by callers.
+ * This is presently restricted to payment requests and method of making those payments.
+ * @author Pulkit
+ *
+ */
 public class CallActionImp implements CallAction {
 	private List<Double> amountRequested;
 	private List<Organisation> paymentReceiver;

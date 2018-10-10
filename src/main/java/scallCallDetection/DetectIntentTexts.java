@@ -27,7 +27,9 @@ import profile.ProfileDTO;
 import profile.ProfileDTOAdapter;
 
 /**
- * DialogFlow API Detect Intent sample with text inputs.
+ * The DetectIntentTexts class initializes and communicates with other components 
+ * in the code to manage processing of intents, application of rules, feature extraction
+ * and classification.
  */
 public class DetectIntentTexts {
 	private ProfileDTO callProfileDTO;
@@ -94,14 +96,6 @@ public class DetectIntentTexts {
             	while((msg = SpeechAudioSocket.textQueue.take()) !="exit"){
             		processText(msg, 0, recording);
             	}
-            	
-				/*do {
-				    this.wait(100); // to avoid a notification arriving early.
-				    processText(SpeechAudioSocket.textQueue.remove(), 0, recording);
-				} 
-				while (!SpeechAudioSocket.textQueue.isEmpty()); */
-
-				
 			} else {
 				// Detect intents for each text input: Process from File
 				for (String text : texts) {
@@ -111,7 +105,6 @@ public class DetectIntentTexts {
 				}
 			}
 			
-			
 			ExportProfile.exportToCSV(csvOutputList);
 			Long totalTime = System.currentTimeMillis() - startTime;
 			totalTime.toString();
@@ -119,6 +112,15 @@ public class DetectIntentTexts {
 		}
 	}
 	
+	/**
+	 * Process a line of text completely to generate a call profile and generate a 
+	 * proability of scam. This is repeated for each line of text.
+	 * This method communicates with other components to retrieve information
+	 * and pass them along to other objects and processing steps.
+	 * @param text
+	 * @param index
+	 * @param recording
+	 */
 	private void processText(String text, int index, boolean recording) {
 		if (recording) {
 			System.out.println("Processed line: " + text);
@@ -156,10 +158,16 @@ public class DetectIntentTexts {
 		DecimalFormat df = new DecimalFormat("####0.00");
 		callProfileDTO.setProgressProbValue(probOfScam);
 		callProfileDTO.setProbabilityValue(df.format(probOfScam*100) + "%");
-		
+		// print probability of call.
 		System.out.println("The probability of this call at this point in time being a scam is " + df.format(probOfScam*100) + "%");
 	}
 	
+	/**
+	 * The start method initializes the configuration for the DialogFlow agent.
+	 * The text input for DF depends on which mode the user has enabled. 
+	 * E.g. the user may use recording or may use a file to process data.
+	 * @throws Exception
+	 */
 	public void start() throws Exception {
 		@SuppressWarnings("unused")
 		Storage storage = StorageOptions.newBuilder().build().getService();

@@ -1,5 +1,10 @@
 package entities;
 
+/**
+ * The Organisation Enum represents Entities that correspond to
+ * real-world ogranisation. E.g. IRS, IRD, Court etc. 
+ * @author Pulkit
+ */
 public enum Organisation {
 	IRS ("IRS"),
 	GOVERNMENT_ENTITY ("GovernmentEntity"),

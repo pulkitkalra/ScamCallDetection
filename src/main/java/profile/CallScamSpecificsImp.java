@@ -7,6 +7,15 @@ import entities.OperationPhrase;
 import entities.Organisation;
 import entities.ThreatEnum;
 
+/**
+ * The CallScamSpecifics defines state related to specifically to tax-related scams.
+ * It captures features of the scam call that are specific to an IRS scam and yet do
+ * not fit into any other category of scam.
+ * Currently these include: - People claiming calls are recorded and monitored; or 
+ * creating urgency.
+ * @author Pulkit
+ *
+ */
 public class CallScamSpecificsImp implements CallScamSpecifics {
 	
 	private int timesCourtMentioned;

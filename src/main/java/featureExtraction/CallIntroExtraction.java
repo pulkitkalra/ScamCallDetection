@@ -9,6 +9,11 @@ import rules.Rule;
 import scallCallDetection.ConversationPhrase;
 import scallCallDetection.DFEntity;
 
+/**
+ * CallIntro extraction extracts intro rules from conversation phrases.
+ * @author Pulkit
+ *
+ */
 public class CallIntroExtraction implements Extraction{
 	private ConversationPhrase phrase;
 

@@ -7,6 +7,13 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * The ProfileDTO object is a small-state representation for the Profile object.
+ * The data transfer object is used as an intermediary object that communicates the profile
+ * to the JavaFX view. This DTO is specific to JavaFX data-types. 
+ * @author Pulkit
+ *
+ */
 public class ProfileDTO {
 	
 	private final StringProperty currentLineOfText = new SimpleStringProperty("");

@@ -4,6 +4,14 @@ import profile.CallProfile;
 import profile.CallProfileImp;
 import scallCallDetection.ConversationPhrase;
 
+/**
+ * Call Feature extraction defines the mapping between DF intents and the relevant 
+ * extraction classes.
+ * 
+ * When adding a new extractor, you must register it under its intent under here.
+ * @author Pulkit
+ *
+ */
 public class CallFeatureExtraction {
 	private CallProfile profile;
 	
@@ -12,7 +20,10 @@ public class CallFeatureExtraction {
 	}
 	
 	/**
-	 * Assume we are only dealing with Call_intro intent for now.
+	 * This method extracts the relevant intent from a conversation phrase and finds 
+	 * the matching extraction class.
+	 * 
+	 * The call profile is updated after the phrase has been processed.
 	 * @param phrase
 	 */
 	public void processConversationPhrase(ConversationPhrase phrase) {

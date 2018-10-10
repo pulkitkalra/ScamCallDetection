@@ -3,6 +3,13 @@ package profile;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The CallReasonImp defines state related to call context/ reason.
+ * It allows the 'context' to call to be captured in the call profile.
+ * This is currently restricted tax related contexts.
+ * @author Pulkit
+ *
+ */
 public class CallReasonImp implements CallReason {
 	
 	private boolean taxRelated;

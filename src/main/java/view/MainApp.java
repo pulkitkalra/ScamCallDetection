@@ -14,10 +14,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * The main app is the entry point of this Application.
+ * It executes the GUI and initializes the NLP operation
+ * based on either user audio or pre-set file. 
+ * @author Pulkit
+ *
+ */
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    
+    /**
+     * Main method that initializes GUI and NLP.
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
